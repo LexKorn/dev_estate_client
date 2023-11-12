@@ -1,5 +1,7 @@
 export interface IFlat {
     id: number;
+    date: string;
+    time: string;
     geo_lat: string;
     geo_lon: string;
     region: number;
@@ -11,11 +13,4 @@ export interface IFlat {
     area: number;
     kitchen_area: number;
     price: number;
-}
-
-export interface IAdvertise {
-    id: number;
-    flat: IFlat;
-    date: string;
-    time: string;
 }

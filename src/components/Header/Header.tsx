@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { COMPANY_ROUTE, MAIN_ROUTE, MORTGAGE_ROUTE } from "../../utils/consts";
+import { FAQ_ROUTE, COMPANY_ROUTE, MAIN_ROUTE, MORTGAGE_ROUTE, NEWS_ROUTE } from "../../utils/consts";
 // import { Context } from '../../index';
 
 import './header.sass';
@@ -52,12 +52,12 @@ const Header: React.FC = () => {
                                 </NavLink>
                             </li>
                             <li className="header__menu_item">
-                                <NavLink to={COMPANY_ROUTE} className={location.pathname === COMPANY_ROUTE ? "active" : ''} >
+                                <NavLink to={NEWS_ROUTE} className={location.pathname === NEWS_ROUTE ? "active" : ''} >
                                     НОВОСТИ
                                 </NavLink>
                             </li>
                             <li className="header__menu_item">
-                                <NavLink to={COMPANY_ROUTE} className={location.pathname === COMPANY_ROUTE ? "active" : ''} >
+                                <NavLink to={FAQ_ROUTE} className={location.pathname === FAQ_ROUTE ? "active" : ''} >
                                     FAQ
                                 </NavLink>
                             </li>

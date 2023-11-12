@@ -1,5 +1,7 @@
 import CompanyPage from "./CompanyPage";
+import FaqPage from "./FaqPage";
 import MainPage from "./MainPage/MainPage";
 import MortgagePage from "./MortgagePage";
+import NewsPage from "./NewsPage";
 
-export {CompanyPage, MainPage, MortgagePage};
+export { FaqPage, CompanyPage, MainPage, MortgagePage, NewsPage };
