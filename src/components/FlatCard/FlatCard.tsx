@@ -2,6 +2,7 @@ import React from 'react'
 import {Card} from 'react-bootstrap'
 
 import { IFlat } from '../../types/types';
+import { convertNumToStr, textDate } from '../../utils/calc';
 import { room_1, room_2, room_3, room_4, room_s } from '../../assets/img';
 
 import './flatCard.sass';
@@ -19,7 +20,7 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
             onClick={() => onClick(flat)}
         >
             <div className="flat-card__date">
-                <div>{new Date(flat.date).toUTCString().substring(5, 17)}</div>
+                <div>{textDate(flat.date)}</div>
             </div>
             <div className="flat-card__wrapper">
                 <div className="flat-card__left">
@@ -36,9 +37,9 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                     }
                 </div>
                 <div className="flat-card__middle">
-                    <div>{flat.rooms}-комнатная {flat.area}м2</div>
-                    <div>этаж {flat.level} из {flat.levels}</div>
-                    <div>тип здания - 
+                    <div className="flat-card__middle_flat">{flat.rooms}-комнатная {flat.area} м<sup>2</sup></div>
+                    <div>Этаж: {flat.level} из {flat.levels}</div>
+                    <div>Тип здания: 
                         {flat.building_type === 1 ? 
                             ' панельное' 
                             : flat.building_type === 2 ? 
@@ -53,10 +54,13 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                             ' другое'
                         }
                     </div>
+                    <div>Регион: {flat.region}</div>
+                    <div>{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                 </div>
                 <div className="flat-card__right">
-                    <div>{flat.price}</div>
-                    <div>
+                    <div className="flat-card__right_price">{convertNumToStr(flat.price)} руб.</div>
+                    <div className="flat-card__right_subprice">или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup></div>
+                    <div className="flat-card__right_icons">
                         <i className="bi bi-list-task flat-card__icon" onClick={() => {}}></i>
                         <i className="bi bi-heart flat-card__icon" onClick={() => {}}></i>
                     </div>
