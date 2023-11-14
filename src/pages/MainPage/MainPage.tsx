@@ -1,14 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import FilterPanel from '../../components/FilterPanel/FilterPanel'
 import List from '../../components/List/List'
 import FlatCard from '../../components/FlatCard/FlatCard'
+import Pageup from '../../components/Pageup/Pageup'
+import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import { IFlat } from '../../types/types'
 
 import './mainPage.sass'
 
 
 const MainPage: React.FC = () => {
+    const [flat, setFlat] = useState<IFlat>({} as IFlat);
+    const [visible, setVisible] = useState<boolean>(false);
+
     const flats: IFlat[] = [
         {
             id: 1,
@@ -60,6 +65,22 @@ const MainPage: React.FC = () => {
         },
         {
             id: 4,
+            date: '2018-03-01',
+            time: '11:24:52',
+            geo_lat: '44.996132',
+            geo_lon: '39.074783',
+            region: 2843,
+            building_type: 4,
+            object_type: 11,
+            level: 12,
+            levels: 16,
+            rooms: 2,
+            area: 38.0,
+            kitchen_area: 5.0,
+            price: 1850000,
+        },
+        {
+            id: 5,
             date: '2018-03-02',
             time: '21:18:42',
             geo_lat: '55.908253',
@@ -76,6 +97,11 @@ const MainPage: React.FC = () => {
         },
     ];
 
+    const selectFlat = (item: IFlat) => {
+        setFlat(item);
+        setVisible(true);
+    };
+
     return (
         <div className='main-page' >
             <FilterPanel />
@@ -84,11 +110,16 @@ const MainPage: React.FC = () => {
                 renderItem={(flat: IFlat) => 
                     <FlatCard
                         flat={flat}
-                        onClick={() => {}}
-                        // onClick={(contact) => selectContact(contact)}
+                        onClick={(flat) => selectFlat(flat)}
                         key={flat.id}
                     />
                 } 
+            />
+            <Pageup />
+            <ModalFlatDetail 
+                show={visible} 
+                onHide={() => setVisible(false)} 
+                flat={flat}
             />
         </div>
     )

@@ -18,6 +18,7 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
     <Card 
             className="flat-card"
             onClick={() => onClick(flat)}
+            style={{border: flat.object_type === 1 ? '2px solid #ffdd2d' : '4px solid #D0F4F2'}}
         >
             <div className="flat-card__date">
                 <div>{textDate(flat.date)}</div>
