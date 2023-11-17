@@ -21,7 +21,7 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
             style={{border: flat.object_type === 1 ? '2px solid #ffdd2d' : '4px solid #D0F4F2'}}
         >
             <div className="flat-card__date">
-                <div>{textDate(flat.date)}</div>
+                {textDate(flat.date)}
             </div>
             <div className="flat-card__wrapper">
                 <div className="flat-card__left">
@@ -61,10 +61,10 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                 <div className="flat-card__right">
                     <div className="flat-card__right_price">{convertNumToStr(flat.price)} руб.</div>
                     <div className="flat-card__right_subprice">или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup></div>
-                    <div className="flat-card__right_icons">
+                    {/* <div className="flat-card__right_icons">
                         <i className="bi bi-list-task flat-card__icon" onClick={() => {}}></i>
                         <i className="bi bi-heart flat-card__icon" onClick={() => {}}></i>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </Card>  
