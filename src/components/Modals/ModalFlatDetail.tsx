@@ -13,6 +13,10 @@ interface ModalFlatDetailProps {
     flat: IFlat;
 };
 
+const url = (lat: string, lon: string): string => {
+    return `https://geotree.ru/coordinates?lat=${lat}&lon=${lon}&z=10&mlat=${lat}&mlon=${lon}&c=`;
+}
+
 
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) => {
   return (
@@ -34,7 +38,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                         className="flat-detail__img_tabs"
                         fill
                     >
-                        <Tab eventKey="flat" title="Планировка" >
+                        <Tab eventKey="flat" title="План квартиры" >
                             {flat.rooms === 1 ?
                                 <img src={room_1} alt="1-room" />
                                 : flat.rooms === 2 ?
@@ -47,7 +51,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                                 <img src={room_s} alt="studio" />
                             }
                         </Tab>
-                        <Tab eventKey="plan" title="На этаже" >
+                        <Tab eventKey="plan" title="План этажа" >
                             {flat.rooms === 1 ?
                                 <img src={room_1_plan} alt="1-room" />
                                 : flat.rooms === 2 ?
@@ -84,13 +88,13 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                     </div>
                     <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                     <div className="flat-detail__info_icons">
-                        <i className="bi bi-list-task flat-detail__info_icons-item" onClick={() => {}}></i>
-                        <i className="bi bi-heart flat-detail__info_icons-item" onClick={() => {}}></i>
-                        <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {}}></i>
+                        <i className="bi bi-list-task flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Сравнить"></i>
+                        <i className="bi bi-heart flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Добавить в Избранное"></i>
+                        <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Забронировать"></i>
                     </div>
                 </div>
             </div>
-            <div>на карте</div>
+            <a className="flat-detail__link" href={url(flat.geo_lat, flat.geo_lon)} target="_blank" rel="noreferrer" >на карте</a>
             <div className="flat-detail__date">
                 Публикация: {textDate(flat.date)}
                 {flat.time}

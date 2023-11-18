@@ -2,7 +2,6 @@
     
 .flat-detail
     color: whitesmoke
-    // color: $yellow1-color
     &__date
         font-size: 14px
         line-height: 18px
@@ -29,21 +28,48 @@
             color: silver
         &_icons
             margin-top: 50px
-            text-align: center
+            text-align: left
             font-size: 20px
+            position: relative
             &-item
                 cursor: pointer
+                &::after
+                    position: absolute
+                    background: $black2-color
+                    color: $yellow1-color
+                    content: attr(data-tooltip)
+                    top: 35px
+                    left: 0
+                    font-size: 14px
+                    opacity: 0
+                    padding: 0
+                    position: absolute
+                    visibility: hidden
+                    transition: all .6s ease-in-out
                 &:nth-child(2)
                     margin-left: 20px
                     margin-right: 20px
                 &:hover
-                    color: $yellow3-color
+                    color: $yellow1-color
+                    &::after
+                        opacity: 1
+                        visibility: visible
     &__img
         &_tabs
             margin-top: 0
             margin-bottom: 15px
-            border-bottom-color: $black2-color
         img
             width: 100%
             height: 300px
             object-fit: contain
+    &__link
+        margin-top: 15px auto
+        color: $yellow1-color
+        font-style: italic
+        text-decoration: none
+        display: inline-block
+        width: 90%
+        text-align: center
+        &:hover
+            color: $yellow3-color
+            
