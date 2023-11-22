@@ -8,5 +8,10 @@ import room_2_plan from './2-rooms-plan.png'
 import room_3_plan from './3-rooms-plan.png'
 import room_4_plan from './4-rooms-plan.png'
 import room_s_plan from './studio-plan.png'
+import room_1_photo from './1-room-photo.png'
+import room_2_photo from './2-rooms-photo.png'
+import room_3_photo from './3-rooms-photo.png'
+import room_4_photo from './4-rooms-photo.png'
+import room_s_photo from './studio-photo.png'
 
-export {room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan}
+export {room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo}

@@ -20,6 +20,10 @@ const FilterPanel: React.FC = () => {
                     {/* // onClick={() => setReaction(false)}> */}
                         Питерский
                 </Dropdown.Item>
+                <Dropdown.Item >
+                    {/* // onClick={() => setReaction(false)}> */}
+                        Любой
+                </Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
         <div className="filter-panel__checks">
@@ -43,7 +47,7 @@ const FilterPanel: React.FC = () => {
             </div>
         </div>
         <div className="filter-panel__range">
-            <Range title='Цена, руб.' min={50000} max={99000000} step={100} gap={10000} />
+            <Range title='Цена, руб.' min={50000} max={99000000} step={1000} gap={10000} />
             <Range title='Площадь, м2' min={10} max={500} step={5} gap={5} />
             <Range title='Этаж' min={1} max={33} step={1} gap={0} />
         </div>

@@ -3,7 +3,7 @@ import {Modal, Tab, Tabs} from 'react-bootstrap'
 
 import { IFlat } from '../../types/types'
 import { textDate, convertNumToStr } from '../../utils/calc'
-import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan } from '../../assets/img';
+import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo } from '../../assets/img';
 
 import './modalFlatDetail.sass'
 
@@ -64,6 +64,19 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                                 <img src={room_s_plan} alt="studio" />
                             }
                         </Tab>
+                        <Tab eventKey="photos" title="Фотографии" >
+                            {flat.rooms === 1 ?
+                                <img src={room_1_photo} alt="1-room" />
+                                : flat.rooms === 2 ?
+                                <img src={room_2_photo} alt="2-rooms" />
+                                : flat.rooms === 3 ?
+                                    <img src={room_3_photo} alt="3-rooms" />
+                                : flat.rooms === 4 ?
+                                    <img src={room_4_photo} alt="4-rooms" />
+                                :
+                                <img src={room_s_photo} alt="studio" />
+                            }
+                        </Tab>
                     </Tabs>
                 </div>
                 <div className="flat-detail__info">
@@ -89,7 +102,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                     <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                     <div className="flat-detail__info_icons">
                         <i className="bi bi-list-task flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Сравнить"></i>
-                        <i className="bi bi-heart flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Добавить в Избранное"></i>
+                        <i className="bi bi-heart flat-detail__info_icons-item" onClick={() => {}} data-tooltip="в Избранное"></i>
                         <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Забронировать"></i>
                     </div>
                 </div>
