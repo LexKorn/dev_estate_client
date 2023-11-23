@@ -1,8 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {observer} from 'mobx-react-lite'
+
+import { Context } from '../..';
 
 import './range.sass';
 
 interface RangeOneValueProps {
+    id: string;
     title: string;
     minValue: number;
     maxValue: number;
@@ -11,30 +15,46 @@ interface RangeOneValueProps {
 }
 
 
-const RangeOneValue: React.FC<RangeOneValueProps> = ({title, minValue, maxValue, step, init}) => {
-    const [maxPrice, setMaxPrice] = useState(init);
+const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minValue, maxValue, step, init}) => {
+    const [value, setValue] = useState(init);
     const [maxRange, setMaxRange] = useState(init);
     const [right, setRight] = useState(init);
+    const {calc} = useContext(Context);
     
     const handlerMaxPrice = () => {
-        setMaxRange(maxPrice);
-        setRight(100 - ((maxPrice - minValue) * 100 )/ (maxValue - minValue));
+        setMaxRange(value);
+        setRight(100 - ((value - minValue) * 100 )/ (maxValue - minValue));
     };
 
     const handlerMaxRange = () => {
-        setMaxPrice(maxRange);
+        setValue(maxRange);
         setRight(100 - ((maxRange - minValue) * 100 )/ (maxValue - minValue));
     };
 
     useEffect(() => {
-        if (maxPrice > maxValue) {
+        if (value > maxValue) {
         }
         handlerMaxPrice();
-    }, [maxPrice]);
+
+        switch (id) {
+            case "price":
+                calc.setPrice(value);
+                break;
+            case "initial":
+                calc.setInitial(value);
+                break;
+            case "months":
+                calc.setMonths(value);
+                break;
+            case "percent":
+                calc.setPercent(value);
+                break;
+        }
+    }, [value]);
 
     useEffect(() => {
         handlerMaxRange();
-    }, [maxRange])
+    }, [maxRange]);
     
 
     return (
@@ -44,11 +64,11 @@ const RangeOneValue: React.FC<RangeOneValueProps> = ({title, minValue, maxValue,
                 <input 
                     type="number" 
                     className="range__value_input range__value_input-max" 
-                    value={maxPrice} 
+                    value={value} 
                     onChange={e => {
                         (+e.target.value > minValue) ? 
-                            (+e.target.value > maxValue) ? setMaxPrice(maxValue) : setMaxPrice(+e.target.value)
-                        : setMaxPrice(minValue)
+                            (+e.target.value > maxValue) ? setValue(maxValue) : setValue(+e.target.value)
+                        : setValue(minValue)
                     }} 
                 />
             </div>
@@ -68,6 +88,6 @@ const RangeOneValue: React.FC<RangeOneValueProps> = ({title, minValue, maxValue,
             </div>
         </div>
     );
-};
+});
 
 export default RangeOneValue;
