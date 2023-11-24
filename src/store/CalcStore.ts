@@ -3,13 +3,13 @@ import {makeAutoObservable} from 'mobx'
 export default class CalcStore {
     _price: number;
     _initial: number;
-    _months: number;
+    _years: number;
     _percent: number;
 
     constructor() {
         this._price = 15000000;
         this._initial = 5000000;
-        this._months = 36;
+        this._years = 10;
         this._percent = 10;
 
         makeAutoObservable(this);
@@ -21,8 +21,8 @@ export default class CalcStore {
     setInitial(initial: number) {
         this._initial = initial;
     }
-    setMonths(months: number) {
-        this._months = months;
+    setYears(years: number) {
+        this._years = years;
     }
     setPercent(percent: number) {
         this._percent = percent;
@@ -34,8 +34,8 @@ export default class CalcStore {
     get initial() {
         return this._initial;
     }
-    get months() {
-        return this._months;
+    get years() {
+        return this._years;
     }
     get percent() {
         return this._percent;

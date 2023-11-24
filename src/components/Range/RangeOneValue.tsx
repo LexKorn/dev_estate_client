@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {observer} from 'mobx-react-lite'
 
 import { Context } from '../..';
+import { convertNumToStr, convertStrToNum } from '../../utils/calc';
 
 import './range.sass';
 
@@ -43,8 +44,8 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
             case "initial":
                 calc.setInitial(value);
                 break;
-            case "months":
-                calc.setMonths(value);
+            case "years":
+                calc.setYears(value);
                 break;
             case "percent":
                 calc.setPercent(value);
@@ -62,12 +63,12 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
             <div className="range__title">{title}</div>
             <div className="range__value">
                 <input 
-                    type="number" 
+                    type="text" 
                     className="range__value_input range__value_input-max" 
-                    value={value} 
+                    value={convertNumToStr(value)} 
                     onChange={e => {
-                        (+e.target.value > minValue) ? 
-                            (+e.target.value > maxValue) ? setValue(maxValue) : setValue(+e.target.value)
+                        (convertStrToNum(e.target.value) > minValue) ? 
+                            (convertStrToNum(e.target.value) > maxValue) ? setValue(maxValue) : setValue(convertStrToNum(e.target.value))
                         : setValue(minValue)
                     }} 
                 />

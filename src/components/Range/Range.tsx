@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
+import { convertNumToStr, convertStrToNum } from '../../utils/calc';
+
 import './range.sass';
 
 interface RangeProps {
@@ -66,8 +68,18 @@ const Range: React.FC<RangeProps> = ({title, min, max, step, gap}) => {
         <div className="range__wrapper">
             <div className="range__title">{title}</div>
             <div className="range__value">
-                <input type="number" className="range__value_input range__value_input-min" value={minPrice} onChange={e => setMinPrice(+e.target.value)} />
-                <input type="number" className="range__value_input range__value_input-max" value={maxPrice} onChange={e => setMaxPrice(+e.target.value)} />
+                <input 
+                    type="text" 
+                    className="range__value_input range__value_input-min" 
+                    value={convertNumToStr(minPrice)} 
+                    onChange={e => setMinPrice(convertStrToNum(e.target.value))} 
+                />
+                <input 
+                    type="text" 
+                    className="range__value_input range__value_input-max" 
+                    value={convertNumToStr(maxPrice)} 
+                    onChange={e => setMaxPrice(convertStrToNum(e.target.value))} 
+                />
             </div>
             <div className="range__slider">
                 <div className="range__slider_progress" style={{left: `${left}%`, right: `${right}%`}}></div>
