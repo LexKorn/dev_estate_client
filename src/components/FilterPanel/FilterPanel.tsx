@@ -1,7 +1,7 @@
 import React from 'react'
 import {Dropdown, Button} from 'react-bootstrap'
 
-import Range from '../Range/Range'
+import RangeTwoValues from '../Range/RangeTwoValues'
 
 import './filterPanel.sass'
 
@@ -47,9 +47,9 @@ const FilterPanel: React.FC = () => {
             </div>
         </div>
         <div className="filter-panel__range">
-            <Range title='Цена, руб.' min={50000} max={99000000} step={10000} gap={10000} />
-            <Range title='Площадь, м2' min={10} max={500} step={5} gap={5} />
-            <Range title='Этаж' min={1} max={33} step={1} gap={0} />
+            <RangeTwoValues title='Цена, руб.' min={50000} max={50000000} step={10000} gap={10000} />
+            <RangeTwoValues title='Площадь, м2' min={10} max={350} step={5} gap={5} />
+            <RangeTwoValues title='Этаж' min={1} max={33} step={1} gap={0} />
         </div>
         <Button variant='outline-warning' className="filter-panel__btn">Показать</Button>
     </div>

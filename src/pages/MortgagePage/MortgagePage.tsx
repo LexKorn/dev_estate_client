@@ -18,7 +18,8 @@ const MortgagePage = observer(() => {
 
     const calcMonthPay = (price: number, initial: number, years: number, percent: number) => {
         const G: number = percent / (100 * 12);
-        const cMonthPay = Math.round((price - initial) * (G / (1 - Math.pow((1 + G), -(years * 12 - 1)))));
+        const S: number = Math.pow((1 + G), years * 12);
+        const cMonthPay = Math.round((price - initial) * (G * S) / (S - 1));
         setMonthPay(cMonthPay);
     };
 
@@ -29,7 +30,7 @@ const MortgagePage = observer(() => {
 
     useEffect(() => {
         setPercentPay(monthPay * calc.years * 12 - (calc.price - calc.initial));
-        setIncome(Math.round(monthPay * 0.4));
+        setIncome(Math.round(monthPay * 1.667));
     }, [monthPay]);
 
     return (
@@ -38,18 +39,62 @@ const MortgagePage = observer(() => {
             <div className="mortgage__wrapper">
                 <div className="mortgage__wrapper_left">
                     <div className="mortgage__range">
-                        <RangeOneValue id="price" title='Стоимость квартиры, руб.' minValue={50000} maxValue={99000000} step={10000} init={15000000} />
-                        <RangeOneValue id="initial" title='Первый взнос, руб' minValue={50000} maxValue={99000000} step={10000} init={5000000} />
-                        <RangeOneValue id="years" title='Срок кредита, лет' minValue={1} maxValue={30} step={1} init={10} />
-                        <RangeOneValue id="percent" title='Процентная ставка' minValue={0.1} maxValue={30} step={0.1} init={10} />
+                        <RangeOneValue 
+                            id="price" 
+                            title='Стоимость квартиры, руб.' 
+                            minValue={50000} 
+                            maxValue={50000000} 
+                            step={10000} 
+                            init={15000000}
+                            btn1="3 млн"
+                            btn2="6 млн"
+                            btn3="10 млн"
+                            btn4="15 млн"
+                        />
+                        <RangeOneValue 
+                            id="initial" 
+                            title='Первый взнос, руб' 
+                            minValue={50000} 
+                            maxValue={50000000} 
+                            step={10000} 
+                            init={5000000}
+                            btn1="0.5 млн"
+                            btn2="1 млн"
+                            btn3="3 млн"
+                            btn4="5 млн"
+                        />
+                        <RangeOneValue 
+                            id="years" 
+                            title='Срок кредита, лет' 
+                            minValue={1} 
+                            maxValue={30} 
+                            step={1} 
+                            init={10}
+                            btn1="5 лет"
+                            btn2="10 лет"
+                            btn3="15 лет"
+                            btn4="20 лет"
+                        />
+                        <RangeOneValue 
+                            id="percent" 
+                            title='Процентная ставка' 
+                            minValue={0.1} 
+                            maxValue={30} 
+                            step={0.1} 
+                            init={10}
+                            btn1="0.1%"
+                            btn2="4.5%"
+                            btn3="6%"
+                            btn4="10%"
+                        />
                     </div>
-                    <Button variant='outline-warning' className="mortgage__btn">Расчитать</Button>
+                    {/* <Button variant='outline-warning' className="mortgage__btn">Расчитать</Button> */}
                 </div>
                 <div className="mortgage__wrapper_right">
-                    <div className="mortgage__result">Ежемесячный платёж (аннуитетный): {convertNumToStr(monthPay)} руб.</div>
-                    <div className="mortgage__result">Кредит: {convertNumToStr(credit)} руб.</div>
-                    <div className="mortgage__result">Проценты: {convertNumToStr(percentPay)} руб.</div>
-                    <div className="mortgage__result">Необходимый доход: {convertNumToStr(income)} руб/мес</div>
+                    <div className="mortgage__result_title">Ежемесячный платёж: <br/> <span>{convertNumToStr(monthPay)} руб.</span></div>
+                    <div className="mortgage__result_text">Кредит: <span>{convertNumToStr(credit)} руб.</span></div>
+                    <div className="mortgage__result_text">Проценты: <span>{convertNumToStr(percentPay)} руб.</span></div>
+                    <div className="mortgage__result_text">Необходимый доход: <span>{convertNumToStr(income)} руб/мес</span></div>
                 </div>
             </div>
         </Container>

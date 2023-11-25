@@ -5,6 +5,7 @@ import { Context } from '../..';
 import { convertNumToStr, convertStrToNum } from '../../utils/calc';
 
 import './range.sass';
+import { log } from 'console';
 
 interface RangeOneValueProps {
     id: string;
@@ -13,10 +14,14 @@ interface RangeOneValueProps {
     maxValue: number;
     step: number;
     init: number;
+    btn1: string;
+    btn2: string;
+    btn3: string;
+    btn4: string;
 }
 
 
-const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minValue, maxValue, step, init}) => {
+const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minValue, maxValue, step, init, btn1, btn2, btn3, btn4}) => {
     const [value, setValue] = useState(init);
     const [maxRange, setMaxRange] = useState(init);
     const [right, setRight] = useState(init);
@@ -56,6 +61,14 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
     useEffect(() => {
         handlerMaxRange();
     }, [maxRange]);
+
+    // @ts-ignore
+    const handlerValue = (e) => {
+        if (e.target.outerText.includes('млн')) {
+            return setValue(parseFloat(e.target.outerText) * 1000000);
+        }
+        setValue(parseFloat(e.target.outerText));
+    };
     
 
     return (
@@ -86,6 +99,12 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
                     step={step} 
                     onChange={e => setMaxRange(+e.target.value)} 
                 />
+            </div>
+            <div className="range__btns">
+                <div className="range__btns_btn" onClick={e => handlerValue(e)}>{btn1}</div>
+                <div className="range__btns_btn" onClick={e => handlerValue(e)}>{btn2}</div>
+                <div className="range__btns_btn" onClick={e => handlerValue(e)}>{btn3}</div>
+                <div className="range__btns_btn" onClick={e => handlerValue(e)}>{btn4}</div>
             </div>
         </div>
     );

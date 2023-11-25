@@ -4,7 +4,7 @@ import { convertNumToStr, convertStrToNum } from '../../utils/calc';
 
 import './range.sass';
 
-interface RangeProps {
+interface RangeTwoValuesProps {
     title: string;
     min: number;
     max: number;
@@ -13,7 +13,7 @@ interface RangeProps {
 }
 
 
-const Range: React.FC<RangeProps> = ({title, min, max, step, gap}) => {
+const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({title, min, max, step, gap}) => {
     const [minPrice, setMinPrice] = useState<number>(min);
     const [maxPrice, setMaxPrice] = useState<number>(max);
     const [minRange, setMinRange] = useState<number>(min);
@@ -92,4 +92,4 @@ const Range: React.FC<RangeProps> = ({title, min, max, step, gap}) => {
     );
 };
 
-export default Range;
+export default RangeTwoValues;
