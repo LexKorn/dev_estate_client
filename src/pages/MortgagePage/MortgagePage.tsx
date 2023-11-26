@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Button, Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import {observer} from 'mobx-react-lite'
 
 import RangeOneValue from '../../components/Range/RangeOneValue'
 import { Context } from '../..'
-import { convertNumToStr, convertStrToNum } from '../../utils/calc' 
+import { convertNumToStr } from '../../utils/calc' 
 
 import './mortgagePage.sass'
 
 
-const MortgagePage = observer(() => {
+const MortgagePage: React.FC = observer(() => {
     const {calc} = useContext(Context);
     const [income, setIncome] = useState<number>(0);
     const [percentPay, setPercentPay] = useState<number>(0);
@@ -88,7 +88,6 @@ const MortgagePage = observer(() => {
                             btn4="10%"
                         />
                     </div>
-                    {/* <Button variant='outline-warning' className="mortgage__btn">Расчитать</Button> */}
                 </div>
                 <div className="mortgage__wrapper_right">
                     <div className="mortgage__result_title">Ежемесячный платёж: <br/> <span>{convertNumToStr(monthPay)} руб.</span></div>

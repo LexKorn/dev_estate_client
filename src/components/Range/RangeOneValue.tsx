@@ -65,9 +65,10 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
     // @ts-ignore
     const handlerValue = (e) => {
         if (e.target.outerText.includes('млн')) {
-            return setValue(parseFloat(e.target.outerText) * 1000000);
+            setValue(parseFloat(e.target.outerText) * 1000000);
+        } else {
+            setValue(parseFloat(e.target.outerText));
         }
-        setValue(parseFloat(e.target.outerText));
     };
     
 
