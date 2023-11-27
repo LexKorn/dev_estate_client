@@ -45,8 +45,37 @@
         &_subprice
             font-size: 14px
             color: $black5-color
-        &_icons
-            margin-top: 50px
-            text-align: center
-            font-size: 20px
-                
+
+
+@media (max-width: 675px)
+    .flat-card
+        width: 450px
+        padding: 8px
+        &__wrapper
+            grid-template-columns: 140px 160px 130px
+        &__middle
+            padding-left: 15px
+            font-size: 14px
+            &_flat
+                font-size: 16px
+        &__right
+            &_price
+                font-size: 18px
+            &_subprice
+                font-size: 12px
+
+@media (max-width: 500px)
+    .flat-card
+        width: 96%
+        &__wrapper
+            grid-template-columns: 30% 40% 30%
+        &__middle
+            padding-left: 10px
+            font-size: 12px
+            &_flat
+                font-size: 14px
+        &__right
+            &_price
+                font-size: 16px
+            &_subprice
+                font-size: 12px

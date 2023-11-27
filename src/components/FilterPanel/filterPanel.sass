@@ -1,19 +1,81 @@
+@import '../../styles/style.sass'
+    
 .filter-panel
     width: 80%
+    position: fixed
+    z-index: 100
+    &__burger
+        display: none
+    &__wrapper
+        background: $black2-color
+        padding-bottom: 8px
     &__checks
         display: flex
+        &_region
+            margin-right: 50px
         &_type
-            margin: 15px 40px 15px 0
+            margin: 25px 50px 0 0
             label
                 margin-left: 5px
                 margin-right: 30px
         &_rooms
-            margin: 15px 0
+            margin: 25px 50px 0 0
             label
                 margin-left: 5px
                 margin-right: 20px
+        &_btn
+            margin-top: 15px
+            height: 40px
     &__range
+        margin-top: 15px
+        margin-bottom: 20px
         display: flex
         justify-content: space-between
-    &__btn
-        margin-top: 25px
+    
+
+@media (max-width: 1050px)
+    .filter-panel__checks
+        &_region, &_type, &_rooms
+            margin-right: 35px
+
+@media (max-width: 991px)
+    .filter-panel
+        width: 94%
+
+@media (max-width: 850px)
+    .filter-panel
+        &__checks
+            flex-direction: column
+            &_rooms, &_type
+                margin-right: 0
+            &_btn
+                width: 100px
+        &__range
+            flex-direction: column
+        &__wrapper
+            display: block
+            position: absolute
+            height: 100vh
+            padding-left: 15px
+            background: $black2-color
+            transition: all 0.6s ease
+            left: -4px
+            &.open-menu
+                left: -100%
+                background: none
+        &__burger
+            display: block
+            margin: 0
+            position: fixed
+            top: 60px
+            left: 180px
+            z-index: 100
+            cursor: pointer
+            transition: all 0.6s ease
+            &.open-menu
+                left: 5px
+            &_btn
+                margin-top: 20px
+                border: none
+        
+    
