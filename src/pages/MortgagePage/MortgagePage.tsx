@@ -40,9 +40,9 @@ const MortgagePage: React.FC = observer(() => {
                 <div className="mortgage__wrapper_left">
                     <div className="mortgage__range">
                         <RangeOneValue 
-                            id="price" 
+                            id="price-mortgage" 
                             title='Стоимость квартиры, руб.' 
-                            minValue={50000} 
+                            minValue={100000} 
                             maxValue={50000000} 
                             step={10000} 
                             init={15000000}
@@ -54,7 +54,7 @@ const MortgagePage: React.FC = observer(() => {
                         <RangeOneValue 
                             id="initial" 
                             title='Первый взнос, руб' 
-                            minValue={50000} 
+                            minValue={100000} 
                             maxValue={50000000} 
                             step={10000} 
                             init={5000000}

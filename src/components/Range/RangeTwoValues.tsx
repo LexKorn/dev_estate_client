@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {observer} from 'mobx-react-lite'
 
+import { Context } from '../..';
 import { convertNumToStr, convertStrToNum } from '../../utils/calc';
 
 import './range.sass';
 
 interface RangeTwoValuesProps {
+    id: string;
     title: string;
     min: number;
     max: number;
@@ -13,25 +16,28 @@ interface RangeTwoValuesProps {
 }
 
 
-const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({title, min, max, step, gap}) => {
-    const [minPrice, setMinPrice] = useState<number>(min);
-    const [maxPrice, setMaxPrice] = useState<number>(max);
+const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, step, gap}) => {
+    // const [minPrice, setMinPrice] = useState<number>(min);
+    // const [maxPrice, setMaxPrice] = useState<number>(max);
     const [minRange, setMinRange] = useState<number>(min);
     const [maxRange, setMaxRange] = useState<number>(max);
     const [left, setLeft] = useState<number>(min);
     const [right, setRight] = useState<number>(max);
+    const [valueMin, setValueMin] = useState<number>(min);
+    const [valueMax, setValueMax] = useState<number>(max);
+    const {base} = useContext(Context);
 
     const handlerMinPrice = () => {
-        if ((maxPrice - minPrice >= gap) && maxPrice <= max) {
-            setMinRange(minPrice);            
-            setLeft((minPrice / max) * 100);
+        if ((valueMax - valueMin >= gap) && valueMax <= max) {
+            setMinRange(valueMin);            
+            setLeft((valueMin / max) * 100);
         }
     };
 
     const handlerMaxPrice = () => {
-        if ((maxPrice - minPrice >= gap) && maxPrice <= max) {
-            setMaxRange(maxPrice);
-            setRight(100 - (maxPrice / max) * 100);
+        if ((valueMax - valueMin >= gap) && valueMax <= max) {
+            setMaxRange(valueMax);
+            setRight(100 - (valueMax / max) * 100);
         }
     };
 
@@ -39,7 +45,7 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({title, min, max, step, g
         if (maxRange - minRange < gap) {
             setMinRange(maxRange - gap);
         } else {
-            setMinPrice(minRange);
+            setValueMin(minRange);
             setLeft((minRange / max) * 100);
         }
     };
@@ -48,7 +54,7 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({title, min, max, step, g
         if (maxRange - minRange < gap) {
             setMaxRange(minRange + gap);
         } else {
-            setMaxPrice(maxRange);
+            setValueMax(maxRange);
             setRight(100 - (maxRange / max) * 100);
         }
     };
@@ -56,12 +62,27 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({title, min, max, step, g
     useEffect(() => {
         handlerMinPrice();
         handlerMaxPrice();
-    }, [minPrice, maxPrice]);
+
+        switch (id) {
+            case "price-main":
+                base.setPriceMin(valueMin);
+                base.setPriceMax(valueMax);
+                break;
+            case "area":
+                base.setAreaMin(valueMin);
+                base.setAreaMax(valueMax);
+                break;
+            case "level":
+                base.setLevelMin(valueMin);
+                base.setLevelMax(valueMax);
+                break;
+        }
+    }, [valueMin, valueMax]);
 
     useEffect(() => {
         handlerMinRange();
         handlerMaxRange();
-    }, [minRange, maxRange])
+    }, [minRange, maxRange]);
     
 
     return (
@@ -71,14 +92,14 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({title, min, max, step, g
                 <input 
                     type="text" 
                     className="range__value_input range__value_input-min" 
-                    value={convertNumToStr(minPrice)} 
-                    onChange={e => setMinPrice(convertStrToNum(e.target.value))} 
+                    value={convertNumToStr(valueMin)} 
+                    onChange={e => setValueMin(convertStrToNum(e.target.value))} 
                 />
                 <input 
                     type="text" 
                     className="range__value_input range__value_input-max" 
-                    value={convertNumToStr(maxPrice)} 
-                    onChange={e => setMaxPrice(convertStrToNum(e.target.value))} 
+                    value={convertNumToStr(valueMax)} 
+                    onChange={e => setValueMax(convertStrToNum(e.target.value))} 
                 />
             </div>
             <div className="range__slider">

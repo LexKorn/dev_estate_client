@@ -5,7 +5,6 @@ import { Context } from '../..';
 import { convertNumToStr, convertStrToNum } from '../../utils/calc';
 
 import './range.sass';
-import { log } from 'console';
 
 interface RangeOneValueProps {
     id: string;
@@ -43,7 +42,7 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
         handlerMaxPrice();
 
         switch (id) {
-            case "price":
+            case "price-mortgage":
                 calc.setPrice(value);
                 break;
             case "initial":

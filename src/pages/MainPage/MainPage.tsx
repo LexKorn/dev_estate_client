@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
+import {observer} from 'mobx-react-lite'
 
 import FilterPanel from '../../components/FilterPanel/FilterPanel'
 import List from '../../components/List/List'
@@ -6,13 +7,21 @@ import FlatCard from '../../components/FlatCard/FlatCard'
 import Pageup from '../../components/Pageup/Pageup'
 import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import { IFlat } from '../../types/types'
+import { Context } from '../..'
 
 import './mainPage.sass'
 
 
-const MainPage: React.FC = () => {
+const MainPage: React.FC = observer(() => {
+    const {base} = useContext(Context);
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
     const [visible, setVisible] = useState<boolean>(false);
+    const [priceMin, setPriceMin] = useState<number>(0);
+    const [priceMax, setPriceMax] = useState<number>(0);
+    const [areaMin, setAreaMin] = useState<number>(0);
+    const [areaMax, setAreaMax] = useState<number>(0);
+    const [levelMin, setLevelMin] = useState<number>(0);
+    const [levelMax, setLevelMax] = useState<number>(0);
 
     const flats: IFlat[] = [
         {
@@ -97,6 +106,15 @@ const MainPage: React.FC = () => {
         },
     ];
 
+    useEffect(() => {
+        setPriceMin(base.priceMin);
+        setPriceMax(base.priceMax);
+        setAreaMin(base.areaMin);
+        setAreaMax(base.areaMax);
+        setLevelMin(base.levelMin);
+        setLevelMax(base.levelMax);
+    }, [base.priceMin, base.priceMax, base.areaMin, base.areaMax, base.levelMin, base.levelMax]);
+
     const selectFlat = (item: IFlat) => {
         setFlat(item);
         setVisible(true);
@@ -104,9 +122,17 @@ const MainPage: React.FC = () => {
 
     return (
         <div className='main-page' >
-            <FilterPanel />
+            <FilterPanel flats={flats} />
+            <div className="main-page__check">
+                <div>Цена min: {priceMin}</div>
+                <div>Цена max: {priceMax}</div>
+                <div>Площадь min: {areaMin}</div>
+                <div>Площадь max: {areaMax}</div>
+                <div>Этаж min: {levelMin}</div>
+                <div>Этаж max: {levelMax}</div>
+            </div>
             <List
-                items={flats}
+                items={base.visibleFlats}
                 renderItem={(flat: IFlat) => 
                     <FlatCard
                         flat={flat}
@@ -123,6 +149,6 @@ const MainPage: React.FC = () => {
             />
         </div>
     )
-}
+})
 
 export default MainPage

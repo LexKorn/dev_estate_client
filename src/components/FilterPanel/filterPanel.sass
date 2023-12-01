@@ -13,6 +13,7 @@
         display: flex
         &_region
             margin-right: 50px
+            margin-top: 15px
         &_type
             margin: 25px 50px 0 0
             label
@@ -31,6 +32,8 @@
         margin-bottom: 20px
         display: flex
         justify-content: space-between
+    &__btn
+        display: none
     
 
 @media (max-width: 1050px)
@@ -48,10 +51,14 @@
             flex-direction: column
             &_rooms, &_type
                 margin-right: 0
+                margin-top: 20px
             &_btn
-                width: 100px
+                display: none
         &__range
             flex-direction: column
+            height: 300px
+            justify-content: space-between
+            margin-top: 18px
         &__wrapper
             display: block
             position: absolute
@@ -75,7 +82,8 @@
             &.open-menu
                 left: 5px
             &_btn
-                margin-top: 20px
+                margin-top: 17px
                 border: none
-        
+        &__btn
+            display: block
     
