@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {observer} from 'mobx-react-lite'
 
 import { Context } from '../..';
 import { convertNumToStr, convertStrToNum } from '../../utils/calc';
@@ -17,8 +16,6 @@ interface RangeTwoValuesProps {
 
 
 const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, step, gap}) => {
-    // const [minPrice, setMinPrice] = useState<number>(min);
-    // const [maxPrice, setMaxPrice] = useState<number>(max);
     const [minRange, setMinRange] = useState<number>(min);
     const [maxRange, setMaxRange] = useState<number>(max);
     const [left, setLeft] = useState<number>(min);

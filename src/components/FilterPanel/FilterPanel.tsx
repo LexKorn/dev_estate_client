@@ -27,12 +27,8 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
 
     useEffect(() => {
         // @ts-ignore
-        base.setVisibleFlats(filterRooms(filterObjectType(flats)));
+        base.setVisibleFlats(filterRanges(filterRooms(filterObjectType(flats))));
     }, [toggle]);
-
-    // useEffect(() => {
-    //     console.log(checkFirst);
-    // }, [checkFirst]);
 
     const menuHandler = () => {
         classMenu === '' ? setClassMenu('open-menu') : setClassMenu('');
@@ -65,6 +61,14 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
             arr.push(...flats.filter(flat => flat.rooms === threeRooms));
             arr.push(...flats.filter(flat => flat.rooms === fourRooms));
         }
+        return arr;
+    }
+
+    function filterRanges(flats: IFlat[]) {
+        let arr: IFlat[] = [];
+        arr = flats.filter(flat => flat.price >= base.priceMin && flat.price <= base.priceMax);
+        arr = arr.filter(flat => flat.area >= base.areaMin && flat.area <= base.areaMax);
+        arr = arr.filter(flat => flat.level >= base.levelMin && flat.level <= base.levelMax);
         return arr;
     }
 
