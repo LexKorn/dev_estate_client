@@ -5,6 +5,7 @@ import {observer} from 'mobx-react-lite'
 import RangeTwoValues from '../Range/RangeTwoValues'
 import { IFlat } from '../../types/types'
 import { Context } from '../..'
+import { codeOfRegions, convertRegion } from '../../utils/regions'
 
 import './filterPanel.sass'
 
@@ -24,14 +25,20 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     const [checkTwo, setCheckTwo] = useState<boolean>(false);
     const [checkThree, setCheckThree] = useState<boolean>(false);
     const [checkFour, setCheckFour] = useState<boolean>(false);
+    const [region, setRegion] = useState<number>(0);
 
     useEffect(() => {
         // @ts-ignore
-        base.setVisibleFlats(filterRanges(filterRooms(filterObjectType(flats))));
+        base.setVisibleFlats(filterRanges(filterRooms(filterObjectType(filterRigions(flats)))));
     }, [toggle]);
 
     const menuHandler = () => {
         classMenu === '' ? setClassMenu('open-menu') : setClassMenu('');
+    };
+
+    const filterHandler = () => {
+        menuHandler();
+        setToggle(!toggle);
     };
 
     function filterObjectType(flats: IFlat[]) {
@@ -72,6 +79,14 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
         return arr;
     }
 
+    function filterRigions(flats: IFlat[]) {
+        if (!region) {
+            return flats;
+        } else {
+            return flats.filter(flat => flat.region === region);
+        }
+    }
+
     return (
         <div className='filter-panel'>
             <div className={"filter-panel__burger" + ' ' + classMenu} onClick={() => menuHandler()}>
@@ -81,20 +96,16 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
             <div className={"filter-panel__wrapper"  + ' ' + classMenu}>
                 <div className="filter-panel__checks">
                     <Dropdown className="filter-panel__checks_region">
-                        <Dropdown.Toggle variant={"outline-secondary"}>Регион</Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item >
-                                {/* // onClick={() => setReaction(true)}> */}
-                                    Московский
-                            </Dropdown.Item>
-                            <Dropdown.Item >
-                                {/* // onClick={() => setReaction(false)}> */}
-                                    Питерский
-                            </Dropdown.Item>
-                            <Dropdown.Item >
-                                {/* // onClick={() => setReaction(false)}> */}
-                                    Любой
-                            </Dropdown.Item>
+                        <Dropdown.Toggle variant={"outline-secondary"}>{Boolean(region) ? convertRegion(region) : 'Регион'}</Dropdown.Toggle>
+                        <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "scroll" }}>
+                            {codeOfRegions.map((region, i) =>
+                                <Dropdown.Item
+                                    onClick={() => setRegion(region)}
+                                    key={i}
+                                >
+                                    {convertRegion(region)}
+                                </Dropdown.Item>    
+                            )}
                         </Dropdown.Menu>
                     </Dropdown>
                     <div className="filter-panel__checks_type">
@@ -121,16 +132,16 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                     <RangeTwoValues
                         id="price-main"
                         title='Цена, руб.' 
-                        min={100000} 
-                        max={50000000} 
+                        min={750000} 
+                        max={30000000} 
                         step={10000} 
                         gap={10000} 
                     />
                     <RangeTwoValues
                         id="area"
                         title='Площадь, м2' 
-                        min={15} 
-                        max={300} 
+                        min={20} 
+                        max={200} 
                         step={5} gap={5} 
                     />
                     <RangeTwoValues
@@ -142,7 +153,7 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         gap={0} 
                     />
                 </div>
-                <Button variant='outline-warning' className="filter-panel__btn" onClick={() => setToggle(!toggle)}>Показать</Button>
+                <Button variant='outline-warning' className="filter-panel__btn" onClick={filterHandler}>Показать</Button>
             </div>
         </div>
     )

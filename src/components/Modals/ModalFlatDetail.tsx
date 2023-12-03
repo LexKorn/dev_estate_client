@@ -110,7 +110,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
             <a className="flat-detail__link" href={url(flat.geo_lat, flat.geo_lon)} target="_blank" rel="noreferrer" >на карте</a>
             <div className="flat-detail__date">
                 Публикация: {textDate(flat.date)}
-                {flat.time}
+                {flat.time?.substring(0, 5)}
             </div>
         </Modal.Body>
     </Modal>

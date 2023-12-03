@@ -14,10 +14,10 @@ export default class BaseStore {
 
     constructor() {
         this._visibleFlats = [];
-        this._priceMin = 150000;
-        this._priceMax = 20000000;
-        this._areaMin = 30;
-        this._areaMax = 120;
+        this._priceMin = 750000;
+        this._priceMax = 30000000;
+        this._areaMin = 20;
+        this._areaMax = 140;
         this._levelMin = 3;
         this._levelMax = 25;
 

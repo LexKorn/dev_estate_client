@@ -3,6 +3,7 @@ import {Card} from 'react-bootstrap'
 
 import { IFlat } from '../../types/types';
 import { convertNumToStr, textDate } from '../../utils/calc';
+import { convertRegion } from '../../utils/regions';
 import { room_1, room_2, room_3, room_4, room_s } from '../../assets/img';
 
 import './flatCard.sass';
@@ -55,16 +56,12 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                             ' другое'
                         }
                     </div>
-                    <div>Регион: {flat.region}</div>
+                    <div>Регион: {convertRegion(flat.region)}</div>
                     <div>{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                 </div>
                 <div className="flat-card__right">
                     <div className="flat-card__right_price">{convertNumToStr(flat.price)} руб.</div>
                     <div className="flat-card__right_subprice">или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup></div>
-                    {/* <div className="flat-card__right_icons">
-                        <i className="bi bi-list-task flat-card__icon" onClick={() => {}}></i>
-                        <i className="bi bi-heart flat-card__icon" onClick={() => {}}></i>
-                    </div> */}
                 </div>
             </div>
         </Card>  
