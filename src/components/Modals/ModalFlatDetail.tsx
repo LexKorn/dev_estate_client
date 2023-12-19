@@ -13,7 +13,7 @@ interface ModalFlatDetailProps {
     flat: IFlat;
 };
 
-const url = (lat: string, lon: string): string => {
+const url = (lat: number, lon: number): string => {
     return `https://geotree.ru/coordinates?lat=${lat}&lon=${lon}&z=10&mlat=${lat}&mlon=${lon}&c=`;
 }
 
@@ -80,10 +80,11 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                     </Tabs>
                 </div>
                 <div className="flat-detail__info">
-                    <div className="flat-detail__info_flat">{flat.rooms}-комнатная {flat.area} м<sup>2</sup></div>
+                    <div className="flat-detail__info_flat">{flat.rooms === -1 ? 'Студия' : flat.rooms + '-комнатная'} {flat.area} м<sup>2</sup></div>
                     <div className="flat-detail__info_price">{convertNumToStr(flat.price)} руб.</div>
                     <div className="flat-detail__info_subprice">или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup></div>
                     <div className="flat-detail__info_info">Этаж: {flat.level} из {flat.levels}</div>
+                    <div className="flat-detail__info_info">Площадь кухни: {flat.kitchen_area} м<sup>2</sup></div>
                     <div className="flat-detail__info_info">Тип здания: 
                         {flat.building_type === 1 ? 
                             ' панельное' 

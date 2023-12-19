@@ -2,8 +2,8 @@ export interface IFlat {
     id: number;
     date: string;
     time: string;
-    geo_lat: string;
-    geo_lon: string;
+    geo_lat: number;
+    geo_lon: number;
     region: number;
     building_type: number;
     object_type: number;

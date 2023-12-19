@@ -11,11 +11,13 @@
         padding-bottom: 8px
     &__checks
         display: flex
+        position: relative
         &_region
-            margin-right: 50px
+            position: absolute
+            // margin-right: 50px
             margin-top: 15px
         &_type
-            margin: 25px 50px 0 0
+            margin: 25px 50px 0 200px
             label
                 margin-left: 5px
                 margin-right: 30px
@@ -27,6 +29,13 @@
         &_btn
             margin-top: 15px
             height: 40px
+        &_reset
+            margin: 20px 0 0 15px
+            font-size: 20px
+            color: $yellow0-color
+            &:hover
+                cursor: pointer
+                color: whitesmoke
     &__range
         margin-top: 15px
         margin-bottom: 20px
@@ -50,10 +59,12 @@
         &__checks
             flex-direction: column
             &_rooms, &_type
-                margin-right: 0
-                margin-top: 20px
+                margin: 20px 0 0
             &_btn
                 display: none
+            &_region
+                margin-top: 70px
+                position: static
         &__range
             flex-direction: column
             height: 350px

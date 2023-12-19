@@ -41,6 +41,19 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
         setToggle(!toggle);
     };
 
+    const resetFilter = () => {
+        setCheckFirst(false);
+        setCheckSecond(false);
+        setCheckStudio(false);
+        setCheckOne(false);
+        setCheckTwo(false);
+        setCheckThree(false);
+        setCheckFour(false);
+        setRegion(0);
+        menuHandler();
+        setToggle(!toggle);
+    };
+
     function filterObjectType(flats: IFlat[]) {
         if ((checkFirst && checkSecond) || (!checkFirst && !checkSecond) ) {
             return flats;
@@ -66,7 +79,7 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
             arr.push(...flats.filter(flat => flat.rooms === oneRoom));
             arr.push(...flats.filter(flat => flat.rooms === twoRooms));
             arr.push(...flats.filter(flat => flat.rooms === threeRooms));
-            arr.push(...flats.filter(flat => flat.rooms === fourRooms));
+            arr.push(...flats.filter(flat => flat.rooms >= fourRooms));
         }
         return arr;
     }
@@ -127,6 +140,7 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         <label htmlFor="check-four">4+</label>
                     </div>
                     <Button variant='outline-warning' className="filter-panel__checks_btn" onClick={() => setToggle(!toggle)}>Показать</Button>
+                    <i className="bi bi-x-circle filter-panel__checks_reset" onClick={resetFilter} data-tooltip="Сбросить"></i>
                 </div>
                 <div className="filter-panel__range">
                     <RangeTwoValues
@@ -148,7 +162,7 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         id="level"
                         title='Этаж' 
                         min={1} 
-                        max={33} 
+                        max={25} 
                         step={1} 
                         gap={0} 
                     />
