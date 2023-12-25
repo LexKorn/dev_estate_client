@@ -154,9 +154,10 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                     <RangeTwoValues
                         id="area"
                         title='Площадь, м2' 
-                        min={20} 
+                        min={10} 
                         max={200} 
-                        step={5} gap={5} 
+                        step={5} 
+                        gap={5} 
                     />
                     <RangeTwoValues
                         id="level"

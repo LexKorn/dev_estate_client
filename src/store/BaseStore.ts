@@ -17,8 +17,8 @@ export default class BaseStore {
         this._priceMin = 750000;
         this._priceMax = 30000000;
         this._areaMin = 20;
-        this._areaMax = 140;
-        this._levelMin = 3;
+        this._areaMax = 200;
+        this._levelMin = 1;
         this._levelMax = 25;
 
         makeAutoObservable(this);
