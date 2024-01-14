@@ -9,7 +9,7 @@ import Pageup from '../../components/Pageup/Pageup'
 import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import { IFlat } from '../../types/types'
 import { Context } from '../..'
-import { fetchFlats } from '../../http/flatsAPI'
+import { fetchPageFlats, fetchAllFlats } from '../../http/flatsAPI'
 
 import './mainPage.sass'
 
@@ -18,37 +18,49 @@ const MainPage: React.FC = observer(() => {
     const {base} = useContext(Context);
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
     const [flats, setFlats] = useState<IFlat[]>([]);
+    const [flatsVisible, setFlatsVisible] = useState<IFlat[]>([]);
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(11);
 
+    // useEffect(() => {
+    //     if (loading) {
+    //         console.log('curent page:', currentPage);
+    //         console.log('total count', totalCount);
+    //         fetchPageFlats(currentPage)
+    //             .then(data => {
+    //                 setFlats([...flats, ...data.rows]);
+    //                 setCurrentPage(prev => prev + 1);
+    //                 setTotalCount(data.count);
+    //             })
+    //             .catch(err => alert(err.message))
+    //             .finally(() => setLoading(false))
+    //     }
+    // }, [loading]);
+
     useEffect(() => {
-        if (loading) {
-            console.log('curent page:', currentPage);
-            console.log('total count', totalCount);
-            fetchFlats(currentPage)
-                .then(data => {
-                    setFlats([...flats, ...data.rows]);
-                    setCurrentPage(prev => prev + 1);
-                    setTotalCount(data.count);
-                })
-                .catch(err => alert(err.message))
-                .finally(() => setLoading(false))
-        }
-    }, [loading]);
+        fetchAllFlats()
+            .then(data => setFlats(data.rows))
+            .catch(err => alert(err.message))
+            .finally(() => setLoading(false))
+    }, []);
+
+    useEffect(() => {
+        setFlatsVisible(base.visibleFlats);
+    }, [base.visibleFlats]);
 
     useEffect(() => {
         console.log(flats);
     }, [flats]);
 
-    useEffect(() => {
-        document.addEventListener('scroll', scrollHandler);
+    // useEffect(() => {
+    //     document.addEventListener('scroll', scrollHandler);
 
-        return function () {
-            document.removeEventListener('scroll', scrollHandler);
-        }
-    }, []);
+    //     return function () {
+    //         document.removeEventListener('scroll', scrollHandler);
+    //     }
+    // }, []);
     
 
     const selectFlat = (item: IFlat) => {
@@ -76,7 +88,7 @@ const MainPage: React.FC = observer(() => {
         <div className='main-page' >
             <FilterPanel flats={flats} />
             <List
-                items={base.visibleFlats}
+                items={flatsVisible}
                 renderItem={(flat: IFlat) => 
                     <FlatCard
                         flat={flat}

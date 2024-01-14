@@ -4,8 +4,13 @@ const $host = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 });
 
-export const fetchFlats = async (page: number) => {
-    const {data} = await $host.get(`api/flats?page=${page}`);
+export const fetchAllFlats = async () => {
+    const {data} = await $host.get('api/flats?limit=200');
+    return data;
+};
+
+export const fetchPageFlats = async (page: number) => {
+    const {data} = await $host.get(`api/flats?limit=25&page=${page}`);
     return data;
 };
 

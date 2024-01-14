@@ -20,16 +20,13 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     const [toggle, setToggle] = useState<boolean>(false);
     const [checkFirst, setCheckFirst] = useState<boolean>(false);
     const [checkSecond, setCheckSecond] = useState<boolean>(false);
-    const [checkStudio, setCheckStudio] = useState<boolean>(false);
-    const [checkOne, setCheckOne] = useState<boolean>(false);
-    const [checkTwo, setCheckTwo] = useState<boolean>(false);
-    const [checkThree, setCheckThree] = useState<boolean>(false);
-    const [checkFour, setCheckFour] = useState<boolean>(false);
+    const [reset, setReset] = useState<boolean>(false);
     const [region, setRegion] = useState<number>(0);
+    const [checkedValues, setCheckedValues] = useState<number[]>([]);
 
     useEffect(() => {
         // @ts-ignore
-        base.setVisibleFlats(filterRanges(filterRooms(filterObjectType(filterRigions(flats)))));
+        base.setVisibleFlats(filterRooms(filterRanges(filterObjectType(filterRigions(flats)))));
     }, [toggle]);
 
     const menuHandler = () => {
@@ -38,20 +35,16 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
 
     const filterHandler = () => {
         menuHandler();
-        setToggle(!toggle);
+        setToggle(prev => !prev);
     };
 
     const resetFilter = () => {
         setCheckFirst(false);
         setCheckSecond(false);
-        setCheckStudio(false);
-        setCheckOne(false);
-        setCheckTwo(false);
-        setCheckThree(false);
-        setCheckFour(false);
         setRegion(0);
         menuHandler();
-        setToggle(!toggle);
+        setReset(prev => !prev);
+        setToggle(prev => !prev);
     };
 
     function filterObjectType(flats: IFlat[]) {
@@ -64,24 +57,23 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
         }
     }
 
-    function filterRooms(flats: IFlat[]) {
-        const arr: IFlat[] = [];
-        const studioRoom: number = checkStudio ? -1 : 0;
-        const oneRoom: number = checkOne ? 1 : 0;
-        const twoRooms: number = checkTwo ? 2 : 0;
-        const threeRooms: number = checkThree ? 3 : 0;
-        const fourRooms: number = checkFour ? 4 : 0;
+    //@ts-ignore
+    function handleCheckboxClick(event) {
+        const value = +event.target.value;
+        if (event.target.checked) {
+            setCheckedValues([...checkedValues, value]);
+        } else {
+            const newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value);
+            setCheckedValues(newCheckedValues);
+        }
+    }
 
-        if ((checkStudio && checkOne && checkTwo && checkThree && checkFour) || (!checkStudio && !checkOne && !checkTwo && !checkThree && !checkFour) ) {
+    function filterRooms(flats: IFlat[]) {
+        if (!checkedValues.length || checkedValues.length === 5) {
             return flats;
         } else {
-            arr.push(...flats.filter(flat => flat.rooms === studioRoom));
-            arr.push(...flats.filter(flat => flat.rooms === oneRoom));
-            arr.push(...flats.filter(flat => flat.rooms === twoRooms));
-            arr.push(...flats.filter(flat => flat.rooms === threeRooms));
-            arr.push(...flats.filter(flat => flat.rooms >= fourRooms));
+            return flats.filter(flat => checkedValues.includes(flat.rooms));
         }
-        return arr;
     }
 
     function filterRanges(flats: IFlat[]) {
@@ -128,18 +120,18 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         <label htmlFor="check-second">Вторичка</label>
                     </div>
                     <div className="filter-panel__checks_rooms">
-                        <input type="checkbox" id="check-studio" checked={checkStudio} onChange={() => setCheckStudio(!checkStudio)} />
+                        <input type="checkbox" id="check-studio" value="-1" onChange={handleCheckboxClick} />
                         <label htmlFor="check-studio">Студия</label>
-                        <input type="checkbox" id="check-one" checked={checkOne} onChange={() => setCheckOne(!checkOne)} />
-                        <label htmlFor="check-one">1</label>
-                        <input type="checkbox" id="check-two" checked={checkTwo} onChange={() => setCheckTwo(!checkTwo)} />
-                        <label htmlFor="check-two">2</label>
-                        <input type="checkbox" id="check-three" checked={checkThree} onChange={() => setCheckThree(!checkThree)} />
-                        <label htmlFor="check-three">3</label>
-                        <input type="checkbox" id="check-four" checked={checkFour} onChange={() => setCheckFour(!checkFour)} />
-                        <label htmlFor="check-four">4+</label>
+                        <input type="checkbox" id="check-one" value="1" onChange={handleCheckboxClick} />
+                        <label htmlFor="check-one">1к</label>
+                        <input type="checkbox" id="check-two" value="2" onChange={handleCheckboxClick} />
+                        <label htmlFor="check-two">2к</label>
+                        <input type="checkbox" id="check-three" value="3" onChange={handleCheckboxClick} />
+                        <label htmlFor="check-three">3к</label>
+                        <input type="checkbox" id="check-four" value="4" onChange={handleCheckboxClick} />
+                        <label htmlFor="check-four">4к+</label>
                     </div>
-                    <Button variant='outline-warning' className="filter-panel__checks_btn" onClick={() => setToggle(!toggle)}>Показать</Button>
+                    <Button variant='outline-warning' className="filter-panel__checks_btn" onClick={() => setToggle(prev => !prev)}>Показать</Button>
                     <i className="bi bi-x-circle filter-panel__checks_reset" onClick={resetFilter} data-tooltip="Сбросить"></i>
                 </div>
                 <div className="filter-panel__range">
@@ -149,7 +141,8 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         min={750000} 
                         max={30000000} 
                         step={10000} 
-                        gap={10000} 
+                        gap={10000}
+                        reset={reset}
                     />
                     <RangeTwoValues
                         id="area"
@@ -157,7 +150,8 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         min={10} 
                         max={200} 
                         step={5} 
-                        gap={5} 
+                        gap={5}
+                        reset={reset}
                     />
                     <RangeTwoValues
                         id="level"
@@ -165,7 +159,8 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         min={1} 
                         max={25} 
                         step={1} 
-                        gap={0} 
+                        gap={0}
+                        reset={reset}
                     />
                 </div>
                 <Button variant='outline-warning' className="filter-panel__btn" onClick={filterHandler}>Показать</Button>

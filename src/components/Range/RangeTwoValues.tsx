@@ -12,10 +12,11 @@ interface RangeTwoValuesProps {
     max: number;
     step: number;
     gap: number;
+    reset: boolean;
 }
 
 
-const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, step, gap}) => {
+const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, step, gap, reset}) => {
     const [minRange, setMinRange] = useState<number>(min);
     const [maxRange, setMaxRange] = useState<number>(max);
     const [left, setLeft] = useState<number>(min);
@@ -80,6 +81,11 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, ste
         handlerMinRange();
         handlerMaxRange();
     }, [minRange, maxRange]);
+
+    useEffect(() => {
+        setValueMin(min);
+        setValueMax(max);
+    }, [reset]);
     
 
     return (
