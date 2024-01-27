@@ -13,5 +13,9 @@ import room_2_photo from './2-rooms-photo.png'
 import room_3_photo from './3-rooms-photo.png'
 import room_4_photo from './4-rooms-photo.png'
 import room_s_photo from './studio-photo.png'
+import room_photo_1 from './room-photo_1.png'
+import room_photo_2 from './room-photo_2.png'
+import room_photo_3 from './room-photo_3.png'
+import room_photo_4 from './room-photo_4.png'
 
-export {room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo}
+export {room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4}

@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
 import {Spinner} from 'react-bootstrap'
+import {Helmet} from "react-helmet"
 
 import FilterPanel from '../../components/FilterPanel/FilterPanel'
 import List from '../../components/List/List'
@@ -50,9 +51,9 @@ const MainPage: React.FC = observer(() => {
         setFlatsVisible(base.visibleFlats);
     }, [base.visibleFlats]);
 
-    useEffect(() => {
-        console.log(flats);
-    }, [flats]);
+    // useEffect(() => {
+    //     console.log(flats);
+    // }, [flats]);
 
     // useEffect(() => {
     //     document.addEventListener('scroll', scrollHandler);
@@ -86,6 +87,10 @@ const MainPage: React.FC = observer(() => {
 
     return (
         <div className='main-page' >
+            <Helmet>
+                <title>Estate | Квартиры</title>
+                <meta name="description" content="Квартиры" />
+            </Helmet>
             <FilterPanel flats={flats} />
             <List
                 items={flatsVisible}

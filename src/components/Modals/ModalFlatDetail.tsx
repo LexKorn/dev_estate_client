@@ -3,7 +3,8 @@ import {Modal, Tab, Tabs} from 'react-bootstrap'
 
 import { IFlat } from '../../types/types'
 import { textDate, convertNumToStr } from '../../utils/calc'
-import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo } from '../../assets/img';
+import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
+import Slider from '../Slider/Slider';
 
 import './modalFlatDetail.sass'
 
@@ -16,6 +17,8 @@ interface ModalFlatDetailProps {
 const url = (lat: number, lon: number): string => {
     return `https://geotree.ru/coordinates?lat=${lat}&lon=${lon}&z=10&mlat=${lat}&mlon=${lon}&c=`;
 }
+
+const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo_4];
 
 
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) => {
@@ -65,7 +68,8 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                             }
                         </Tab>
                         <Tab eventKey="photos" title="Фотографии" >
-                            {flat.rooms === 1 ?
+                            <Slider photos={arrOfImg} />
+                            {/* {flat.rooms === 1 ?
                                 <img src={room_1_photo} alt="1-room" />
                                 : flat.rooms === 2 ?
                                 <img src={room_2_photo} alt="2-rooms" />
@@ -75,7 +79,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = ({show, onHide, flat}) =
                                     <img src={room_4_photo} alt="4-rooms" />
                                 :
                                 <img src={room_s_photo} alt="studio" />
-                            }
+                            } */}
                         </Tab>
                     </Tabs>
                 </div>

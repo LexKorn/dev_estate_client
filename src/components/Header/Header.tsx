@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { FAQ_ROUTE, COMPANY_ROUTE, MAIN_ROUTE, MORTGAGE_ROUTE, NEWS_ROUTE } from "../../utils/consts";
+import { MAIN_ROUTE, MORTGAGE_ROUTE, LOGIN_ROUTE, ACCOUNT_ROUTE, COMPANY_ROUTE, FAQ_ROUTE, NEWS_ROUTE } from "../../utils/consts";
 // import { Context } from '../../index';
 
 import './header.sass';
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
                                     ИПОТЕКА
                                 </NavLink>
                             </li>
-                            <li className="header__menu_item">
+                            {/* <li className="header__menu_item">
                                 <NavLink to={COMPANY_ROUTE} className={location.pathname === COMPANY_ROUTE ? "active" : ''} >
                                     О КОМПАНИИ
                                 </NavLink>
@@ -59,6 +59,16 @@ const Header: React.FC = () => {
                             <li className="header__menu_item">
                                 <NavLink to={FAQ_ROUTE} className={location.pathname === FAQ_ROUTE ? "active" : ''} >
                                     FAQ
+                                </NavLink>
+                            </li> */}
+                            <li className="header__menu_item">
+                                <NavLink to={LOGIN_ROUTE} className={location.pathname === LOGIN_ROUTE ? "active" : ''} >
+                                    АВТОРИЗАЦИЯ
+                                </NavLink>
+                            </li>
+                            <li className="header__menu_item">
+                                <NavLink to={ACCOUNT_ROUTE} className={location.pathname === ACCOUNT_ROUTE ? "active" : ''} >
+                                    ЛИЧНЫЙ КАБИНЕТ
                                 </NavLink>
                             </li>
                             {/* <li className="header__menu_item">

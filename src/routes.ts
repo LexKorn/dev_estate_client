@@ -1,15 +1,7 @@
-import { FAQ_ROUTE, COMPANY_ROUTE, MAIN_ROUTE, MORTGAGE_ROUTE, NEWS_ROUTE } from './utils/consts';
-import { FaqPage, CompanyPage, MainPage, MortgagePage, NewsPage } from './pages';
+import { MAIN_ROUTE, MORTGAGE_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, ACCOUNT_ROUTE, COMPANY_ROUTE, FAQ_ROUTE, NEWS_ROUTE } from './utils/consts';
+import { AuthPage, AccountPage, MainPage, MortgagePage, CompanyPage, FaqPage, NewsPage } from './pages';
 
 export const routes = [
-    {
-        path: FAQ_ROUTE,
-        Component: FaqPage
-    },
-    {
-        path: COMPANY_ROUTE,
-        Component: CompanyPage
-    },
     {
         path: MAIN_ROUTE,
         Component: MainPage
@@ -19,7 +11,27 @@ export const routes = [
         Component: MortgagePage
     },
     {
+        path: COMPANY_ROUTE,
+        Component: CompanyPage
+    },
+    {
+        path: FAQ_ROUTE,
+        Component: FaqPage
+    },
+    {
         path: NEWS_ROUTE,
         Component: NewsPage
     },
+    {
+        path: LOGIN_ROUTE,
+        Component: AuthPage
+    },
+    {
+        path: REGISTER_ROUTE,
+        Component: AuthPage
+    },
+    {
+        path: ACCOUNT_ROUTE,
+        Component: AccountPage
+    }
 ];

@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { Container } from 'react-bootstrap'
 import {observer} from 'mobx-react-lite'
+import {Helmet} from "react-helmet"
 
 import RangeOneValue from '../../components/Range/RangeOneValue'
 import { Context } from '../..'
@@ -35,6 +36,10 @@ const MortgagePage: React.FC = observer(() => {
 
     return (
         <Container className='mortgage'>
+            <Helmet>
+                <title>Estate | Калькулятор</title>
+                <meta name="description" content="Ипотечный калькулятор" />
+            </Helmet>
             <div className="mortgage__title">Ипотечный калькулятор</div>
             <div className="mortgage__wrapper">
                 <div className="mortgage__wrapper_left">

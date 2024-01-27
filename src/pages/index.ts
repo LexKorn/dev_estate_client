@@ -1,7 +1,9 @@
-import CompanyPage from "./CompanyPage";
-import FaqPage from "./FaqPage";
+import AuthPage from "./AuthPage";
+import AccountPage from "./AccountPage/AccountPage";
 import MainPage from "./MainPage/MainPage";
 import MortgagePage from "./MortgagePage/MortgagePage";
+import CompanyPage from "./CompanyPage";
+import FaqPage from "./FaqPage";
 import NewsPage from "./NewsPage";
 
-export { FaqPage, CompanyPage, MainPage, MortgagePage, NewsPage };
+export { AuthPage, AccountPage, MainPage, MortgagePage, CompanyPage, FaqPage, NewsPage };
