@@ -33,9 +33,25 @@
             margin: 20px 0 0 15px
             font-size: 20px
             color: $yellow0-color
+            &::after
+                position: absolute
+                background: $black2-color
+                color: $yellow1-color
+                content: attr(data-tooltip)
+                top: 55px
+                right: 20px
+                font-size: 14px
+                opacity: 0
+                padding: 0
+                position: absolute
+                visibility: hidden
+                transition: all .6s ease-in-out
             &:hover
                 cursor: pointer
                 color: whitesmoke
+                &::after
+                    opacity: 1
+                    visibility: visible
     &__range
         margin-top: 15px
         margin-bottom: 20px
