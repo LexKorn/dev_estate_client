@@ -1,19 +1,27 @@
 import { makeAutoObservable } from "mobx"
 
 export default class LikeStore {
-    _arrOfId: number[];
+    _arrOfLikeIds: number[];
+    _arrOfCompareIds: number[];
 
     constructor() {
-        this._arrOfId = [];
+        this._arrOfLikeIds = [];
+        this._arrOfCompareIds = [];
 
         makeAutoObservable(this);
     }
 
-    setArrOfId(id: number) {
-        this._arrOfId.push(id);
+    setArrOfLikeIds(id: number) {
+        this._arrOfLikeIds.push(id);
+    }
+    setArrOfCompareIds(id: number) {
+        this._arrOfCompareIds.push(id);
     }
 
-    get arrOfId() {
-        return this._arrOfId;
+    get arrOfLikeIds() {
+        return this._arrOfLikeIds;
+    }
+    get arrOfCompareIds() {
+        return this._arrOfCompareIds;
     }
 }

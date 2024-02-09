@@ -27,10 +27,15 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
     const {like} = useContext(Context);
 
     const addLike = () => {
-        like.setArrOfId(flat.id)
+        like.setArrOfLikeIds(flat.id)
+    }
+
+    const addCompare = () => {
+        like.setArrOfCompareIds(flat.id)
     }
 
     const removeLike = () => {alert('Эта квартира уже в Избранном')}
+    const removeCompare = () => {alert('Эта квартира уже в Сравнении')}
 
     return (
         <Modal
@@ -116,11 +121,15 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                         </div>
                         <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                         <div className="flat-detail__info_icons">
-                            <i className="bi bi-list-task flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Сравнить"></i>
-                            {like.arrOfId.length && like.arrOfId.includes(flat.id) ?
+                            {like.arrOfLikeIds.length && like.arrOfLikeIds.includes(flat.id) ?
                                 <i className="bi bi-heart-fill flat-detail__info_icons-item" onClick={removeLike} data-tooltip="удалить из Избранного"></i>
                                 :
                                 <i className="bi bi-heart flat-detail__info_icons-item" onClick={addLike} data-tooltip="в Избранное"></i>
+                            }
+                            {like.arrOfCompareIds.length && like.arrOfCompareIds.includes(flat.id) ?
+                                <i className="bi bi-card-checklist flat-detail__info_icons-item" onClick={removeCompare} data-tooltip="Удалить из сравнения"></i>
+                                :
+                                <i className="bi bi-list-task flat-detail__info_icons-item" onClick={addCompare} data-tooltip="Сравнить"></i>
                             }
                             <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Забронировать"></i>
                         </div>
