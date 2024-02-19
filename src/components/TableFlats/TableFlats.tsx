@@ -2,6 +2,8 @@ import React from 'react'
 import {Table} from 'react-bootstrap'
 
 import { IFlat } from '../../types/types'
+import { convertNumToStr } from '../../utils/calc';
+import { convertRegion } from '../../utils/regions';
 
 interface TableFlatsProps {
     items: IFlat[];
@@ -11,7 +13,7 @@ interface TableFlatsProps {
 
 const TableFlats: React.FC<TableFlatsProps> = ({items}) => {
     return (
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover variant="dark" style={{textAlign: 'center'}}>
             <thead>
                 <tr>
                     <th>#</th>
@@ -26,23 +28,19 @@ const TableFlats: React.FC<TableFlatsProps> = ({items}) => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                {items.map(item =>
+                    <tr key={item.id}>
+                        <td>{item.id}</td>
+                        <td>{convertNumToStr(item.price)}</td>
+                        <td>{item.rooms}</td>
+                        <td>{item.area}</td>
+                        <td>{item.kitchen_area}</td>
+                        <td>{item.level} из {item.levels}</td>
+                        <td>{item.building_type}</td>
+                        <td>{item.object_type === 1 ? 'Вторичка' : 'Новостройка'}</td>
+                        <td>{convertRegion(item.region)}</td>
+                    </tr>
+                )}
             </tbody>
         </Table>
     );

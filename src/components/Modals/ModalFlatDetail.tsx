@@ -131,7 +131,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                                 :
                                 <i className="bi bi-list-task flat-detail__info_icons-item" onClick={addCompare} data-tooltip="Сравнить"></i>
                             }
-                            <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {}} data-tooltip="Забронировать"></i>
+                            <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {alert('Данная функция пока в разработке...')}} data-tooltip="Забронировать"></i>
                         </div>
                     </div>
                 </div>
