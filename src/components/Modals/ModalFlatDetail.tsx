@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite'
 
 import { IFlat } from '../../types/types'
 import { Context } from '../..'
-import { textDate, convertNumToStr } from '../../utils/calc'
+import { textDate, convertNumToStr, convertBuilding } from '../../utils/calc'
 import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import Slider from '../Slider/Slider';
 
@@ -104,21 +104,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                         <div className="flat-detail__info_subprice">или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup></div>
                         <div className="flat-detail__info_info">Этаж: {flat.level} из {flat.levels}</div>
                         <div className="flat-detail__info_info">Площадь кухни: {flat.kitchen_area} м<sup>2</sup></div>
-                        <div className="flat-detail__info_info">Тип здания: 
-                            {flat.building_type === 1 ? 
-                                ' панельное' 
-                                : flat.building_type === 2 ? 
-                                ' монолитное' 
-                                : flat.building_type === 3 ? 
-                                ' кирпичное' 
-                                : flat.building_type === 4 ? 
-                                ' блочное' 
-                                : flat.building_type === 5 ? 
-                                ' деревянное' 
-                                :
-                                ' другое'
-                            }
-                        </div>
+                        <div className="flat-detail__info_info">Тип здания: {convertBuilding(flat.building_type)}</div>
                         <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                         <div className="flat-detail__info_icons">
                             {like.arrOfLikeIds.length && like.arrOfLikeIds.includes(flat.id) ?

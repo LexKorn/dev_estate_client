@@ -32,3 +32,20 @@ export const calcMonthPay = (price: number, initPay: number, months: number, per
 
     return result;
 };
+
+export const convertBuilding = (num: number) => {
+    const res = 
+        num === 1 ? 
+        ' панельное' 
+        : num === 2 ? 
+        ' монолитное' 
+        : num === 3 ? 
+        ' кирпичное' 
+        : num === 4 ? 
+        ' блочное' 
+        : num === 5 ? 
+        ' деревянное' 
+        :
+        ' другое'
+    return res;
+};

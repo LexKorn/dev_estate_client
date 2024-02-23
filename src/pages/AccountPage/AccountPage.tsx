@@ -76,16 +76,9 @@ const AccountPage: React.FC = observer(() => {
                 </Tab>
                 <Tab eventKey="compare" title="Сравнить" >
                     <TableFlats items={comparedFlats} />
-                    {/* <List
-                        items={comparedFlats}
-                        renderItem={(flat: IFlat) => 
-                            <FlatCard
-                                flat={flat}
-                                onClick={(flat) => selectFlat(flat)}
-                                key={flat.id}
-                            />
-                        } 
-                    /> */}
+                </Tab>
+                <Tab eventKey="write" title="Написать" >
+                    
                 </Tab>
             </Tabs>
             
