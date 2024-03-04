@@ -1,17 +1,17 @@
 import React, {useState, useContext} from 'react';
-import {Container, Form, Card, Button} from 'react-bootstrap';
+import {Container, Form, Button} from 'react-bootstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
 import {AxiosError} from 'axios';
 import {Helmet} from "react-helmet";
 
 import { LOGIN_ROUTE, REGISTER_ROUTE, MAIN_ROUTE } from '../utils/consts';
-// import { login, registration } from '../http/userAPI';
+import { login, registration } from '../http/usersAPI';
 import {Context} from '../index';
 
 
 const AuthPage: React.FC = observer(() => {
-    // const {users} = useContext(Context);
+    const {user} = useContext(Context);
     const location = useLocation();
     const navigate = useNavigate();
     const isLogin = location.pathname === LOGIN_ROUTE;
@@ -21,19 +21,18 @@ const AuthPage: React.FC = observer(() => {
     const click = async () => {
         try {
             if (isLogin) {
-                // @ts-ignore
-                await login(email, password).then(data => users.setRole(data.role));
+                await login(email, password);
             } else {
-                // @ts-ignore
-                await registration(email, password).then(data => users.setRole(data.role));
+                await registration(email, password);
             }
             
-            // users.setIsAuth(true);
+            user.setIsAuth(true);
             navigate(MAIN_ROUTE);
 
         } catch(err: unknown) {
             const error = err as AxiosError;
-            alert(JSON.parse(error.request.response).message);
+            // alert(JSON.parse(error.request.response).message);
+            alert(error.message);
         }        
     };
 

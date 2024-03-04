@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
-import {Spinner, Tab, Tabs} from 'react-bootstrap'
+import {Spinner, Tab, Tabs, Button} from 'react-bootstrap'
 import {Helmet} from "react-helmet"
 import {observer} from 'mobx-react-lite'
 
@@ -24,7 +24,7 @@ const AccountPage: React.FC = observer(() => {
     const [loading, setLoading] = useState<boolean>(false);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<number[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
-    const {like} = useContext(Context);
+    const {like, user} = useContext(Context);
 
     useEffect(() => {
         setArrOfLikeIds(like.arrOfLikeIds);
@@ -42,6 +42,11 @@ const AccountPage: React.FC = observer(() => {
     const selectFlat = (item: IFlat) => {
         setFlat(item);
         setVisible(true);
+    };
+
+    const logOut = () => {
+        user.setIsAuth(false);
+        localStorage.clear();
     };
 
     if (loading) {
@@ -81,6 +86,13 @@ const AccountPage: React.FC = observer(() => {
                     
                 </Tab>
             </Tabs>
+
+            <Button 
+                variant={"outline-secondary"} 
+                onClick={() => logOut()} 
+                className="ms-2 nav-btn"
+                >Выйти
+            </Button>
             
             <Pageup />
             <ModalFlatDetail 
