@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect} from 'react'
 import {Spinner, Tab, Tabs, Button} from 'react-bootstrap'
 import {Helmet} from "react-helmet"
 import {observer} from 'mobx-react-lite'
+import { useNavigate } from 'react-router-dom'
 
 import List from '../../components/List/List'
 import FlatCard from '../../components/FlatCard/FlatCard'
@@ -9,8 +10,11 @@ import Pageup from '../../components/Pageup/Pageup'
 import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import TableFlats from '../../components/TableFlats/TableFlats'
 import { flatsDB } from '../../utils/flatsDB'
-import { IFlat } from '../../types/types'
+import {_transformObjToArr} from '../../utils/calc'
+import {MAIN_ROUTE} from '../../utils/consts';
+import { IFlat, ILike } from '../../types/types'
 import { Context } from '../..'
+import {fetchLikes} from '../../http/likesAPI'
 
 import './accountPage.sass'
 
@@ -22,17 +26,26 @@ const AccountPage: React.FC = observer(() => {
     const [comparedFlats, setComparedFlats] = useState<IFlat[]>([]);
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [arrOfLikeIds, setArrOfLikeIds] = useState<number[]>([]);
+    const [arrOfLikeIds, setArrOfLikeIds] = useState<ILike[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
     const {like, user} = useContext(Context);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        setArrOfLikeIds(like.arrOfLikeIds);
+        fetchLikes().then(data => setArrOfLikeIds(data))
+    }, []);
+
+    console.log(arrOfLikeIds);
+    console.log(_transformObjToArr(arrOfLikeIds));
+    
+
+    useEffect(() => {
+        // setArrOfLikeIds(like.arrOfLikeIds);
         setArrOfCompareIds(like.arrOfCompareIds);
     }, []);
 
     useEffect(() => {
-        setLikedFlats(flats.filter(flat => arrOfLikeIds.includes(flat.id)));
+        setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));
     }, [arrOfLikeIds]);
 
     useEffect(() => {
@@ -47,6 +60,7 @@ const AccountPage: React.FC = observer(() => {
     const logOut = () => {
         user.setIsAuth(false);
         localStorage.clear();
+        navigate(MAIN_ROUTE);
     };
 
     if (loading) {

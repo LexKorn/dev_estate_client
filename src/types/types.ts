@@ -14,3 +14,9 @@ export interface IFlat {
     kitchen_area: number;
     price: number;
 }
+
+export interface ILike {
+    id: number;
+    idOfFlat: number;
+    userId: number;
+}
