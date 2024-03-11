@@ -1,3 +1,5 @@
+import { ILike } from "../types/types";
+
 export const convertNumToStr = (num: number) => {
     return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
@@ -49,3 +51,13 @@ export const convertBuilding = (num: number) => {
         ' другое'
     return res;
 };
+
+export const _transformObjToArr = (arr: ILike[]) => {
+    let res: number[] = [];
+    let arr2 = arr.map(({idOfFlat}) => ({idOfFlat}));
+
+    for (let i = 0; i < arr2.length; i++) {
+        res.push(...Object.values(arr2[i]))
+    }
+    return res;
+}

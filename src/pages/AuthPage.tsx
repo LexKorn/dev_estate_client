@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {AxiosError} from 'axios';
 import {Helmet} from "react-helmet";
 
-import { LOGIN_ROUTE, REGISTER_ROUTE, MAIN_ROUTE } from '../utils/consts';
+import { LOGIN_ROUTE, REGISTER_ROUTE, ACCOUNT_ROUTE } from '../utils/consts';
 import { login, registration } from '../http/usersAPI';
 import {Context} from '../index';
 
@@ -27,12 +27,11 @@ const AuthPage: React.FC = observer(() => {
             }
             
             user.setIsAuth(true);
-            navigate(MAIN_ROUTE);
+            navigate(ACCOUNT_ROUTE);
 
         } catch(err: unknown) {
             const error = err as AxiosError;
-            // alert(JSON.parse(error.request.response).message);
-            alert(error.message);
+            alert(JSON.parse(error.request.response).message);
         }        
     };
 
