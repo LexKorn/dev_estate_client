@@ -33,7 +33,7 @@ const AccountPage: React.FC = observer(() => {
 
     useEffect(() => {
         fetchLikes().then(data => setArrOfLikeIds(data))
-    }, []);
+    }, [visible]);
 
     console.log(arrOfLikeIds);
     console.log(_transformObjToArr(arrOfLikeIds));
@@ -46,6 +46,8 @@ const AccountPage: React.FC = observer(() => {
 
     useEffect(() => {
         setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));
+        // like.setArrOfLikeIds(_transformObjToArr(arrOfLikeIds));
+        _transformObjToArr(arrOfLikeIds).forEach(item => like.setArrOfLikeIds(item));
     }, [arrOfLikeIds]);
 
     useEffect(() => {
