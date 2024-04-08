@@ -16,7 +16,7 @@ interface FilterPanelProps {
 
 const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     const {base} = useContext(Context);
-    const [classMenu, setClassMenu] = useState<string>('');
+    const [classMenu, setClassMenu] = useState<string>('open-menu');
     const [toggle, setToggle] = useState<boolean>(false);
     const [checkFirst, setCheckFirst] = useState<boolean>(false);
     const [checkSecond, setCheckSecond] = useState<boolean>(false);

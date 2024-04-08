@@ -106,7 +106,7 @@ const AccountPage: React.FC = observer(() => {
             <Button 
                 variant={"outline-secondary"} 
                 onClick={() => logOut()} 
-                className="ms-2 nav-btn"
+                className="nav-btn account__btn"
                 >Выйти
             </Button>
             
