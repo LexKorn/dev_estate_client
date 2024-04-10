@@ -14,6 +14,9 @@ export default class LikeStore {
     setArrOfLikeIds(id: number) {
         this._arrOfLikeIds.push(id);
     }
+    setArrOfLikeIdsRemove(id: number) {
+        this._arrOfLikeIds = this._arrOfLikeIds.filter(item => item !== id);
+    }
     setArrOfCompareIds(id: number) {
         this._arrOfCompareIds.push(id);
     }

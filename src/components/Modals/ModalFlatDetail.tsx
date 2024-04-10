@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {Modal, Tab, Tabs} from 'react-bootstrap'
 import {observer} from 'mobx-react-lite'
 
@@ -26,10 +26,16 @@ const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo
 
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide, flat}) => {
     const {like} = useContext(Context);
+    const [arrOfLikeIds, setArrOfLikeIds] = useState<number[]>([]);
+
+    useEffect(() => {
+        setArrOfLikeIds(like.arrOfLikeIds);
+    }, [like.arrOfLikeIds]);
 
     const addLike = () => {
         // like.setArrOfLikeIds(flat.id)
         createLike(flat.id);
+        like.setArrOfLikeIds(flat.id);
     }
 
     const addCompare = () => {
@@ -37,9 +43,10 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
     }
 
     const removeLike = () => {
-        deleteLike(flat.id)
+        deleteLike(flat.id);
+        like.setArrOfLikeIdsRemove(flat.id);
         // alert('Квартира удалена из Избранного')
-        onHide()
+        onHide();
     }
     
     const removeCompare = () => {alert('Эта квартира уже в Сравнении')}
@@ -114,7 +121,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                         <div className="flat-detail__info_info">Тип здания: {convertBuilding(flat.building_type)}</div>
                         <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                         <div className="flat-detail__info_icons">
-                            {like.arrOfLikeIds.length && like.arrOfLikeIds.includes(flat.id) ?
+                            {arrOfLikeIds.length && arrOfLikeIds.includes(flat.id) ?
                                 <i className="bi bi-heart-fill flat-detail__info_icons-item" onClick={removeLike} data-tooltip="удалить из Избранного"></i>
                                 :
                                 <i className="bi bi-heart flat-detail__info_icons-item" onClick={addLike} data-tooltip="в Избранное"></i>
