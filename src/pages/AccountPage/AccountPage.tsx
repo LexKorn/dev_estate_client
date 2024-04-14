@@ -9,19 +9,20 @@ import FlatCard from '../../components/FlatCard/FlatCard'
 import Pageup from '../../components/Pageup/Pageup'
 import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import TableFlats from '../../components/TableFlats/TableFlats'
-import { flatsDB } from '../../utils/flatsDB'
+// import { flatsDB } from '../../utils/flatsDB'
 import {_transformObjToArr} from '../../utils/calc'
 import {MAIN_ROUTE} from '../../utils/consts';
 import { IFlat, ILike } from '../../types/types'
 import { Context } from '../..'
 import {fetchLikes} from '../../http/likesAPI'
+import { fetchAllFlats } from '../../http/flatsAPI'
 
 import './accountPage.sass'
 
 
 const AccountPage: React.FC = observer(() => {
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
-    const [flats, setFlats] = useState<IFlat[]>(flatsDB);
+    const [flats, setFlats] = useState<IFlat[]>([]);
     const [likedFlats, setLikedFlats] = useState<IFlat[]>([]);
     const [comparedFlats, setComparedFlats] = useState<IFlat[]>([]);
     const [visible, setVisible] = useState<boolean>(false);
@@ -30,6 +31,13 @@ const AccountPage: React.FC = observer(() => {
     const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
     const {like, user} = useContext(Context);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchAllFlats()
+            .then(data => setFlats(data.rows))
+            .catch(err => alert(err.message))
+            .finally(() => setLoading(false))
+    }, []);
 
     useEffect(() => {
         fetchLikes().then(data => setArrOfLikeIds(data))
