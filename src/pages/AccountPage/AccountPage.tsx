@@ -15,6 +15,7 @@ import {MAIN_ROUTE} from '../../utils/consts';
 import { IFlat, ILike } from '../../types/types'
 import { Context } from '../..'
 import {fetchLikes} from '../../http/likesAPI'
+import {fetchCompares} from '../../http/comparesAPI'
 
 import './accountPage.sass'
 
@@ -27,31 +28,23 @@ const AccountPage: React.FC = observer(() => {
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<ILike[]>([]);
-    const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
+    const [arrOfCompareIds, setArrOfCompareIds] = useState<ILike[]>([]);
     const {like, user} = useContext(Context);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchLikes().then(data => setArrOfLikeIds(data))
+        fetchLikes().then(data => setArrOfLikeIds(data));
+        fetchCompares().then(data => setArrOfCompareIds(data));
     }, [visible]);
-
-    console.log(arrOfLikeIds);
-    console.log(_transformObjToArr(arrOfLikeIds));
-    
-
-    useEffect(() => {
-        // setArrOfLikeIds(like.arrOfLikeIds);
-        setArrOfCompareIds(like.arrOfCompareIds);
-    }, []);
 
     useEffect(() => {
         setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));
-        // like.setArrOfLikeIds(_transformObjToArr(arrOfLikeIds));
         _transformObjToArr(arrOfLikeIds).forEach(item => like.setArrOfLikeIds(item));
     }, [arrOfLikeIds]);
 
     useEffect(() => {
-        setComparedFlats(flats.filter(flat => arrOfCompareIds.includes(flat.id)));
+        setComparedFlats(flats.filter(flat => _transformObjToArr(arrOfCompareIds).includes(flat.id)));
+        _transformObjToArr(arrOfCompareIds).forEach(item => like.setArrOfCompareIds(item));
     }, [arrOfCompareIds]);
 
     const selectFlat = (item: IFlat) => {
