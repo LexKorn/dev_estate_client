@@ -6,6 +6,7 @@ import { IFlat } from '../../types/types'
 import { Context } from '../..'
 import { textDate, convertNumToStr, convertBuilding } from '../../utils/calc'
 import {createLike, deleteLike} from '../../http/likesAPI'
+import {createCompare, deleteCompare} from '../../http/comparesAPI'
 import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import Slider from '../Slider/Slider';
 
@@ -27,29 +28,35 @@ const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide, flat}) => {
     const {like} = useContext(Context);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<number[]>([]);
+    const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
 
     useEffect(() => {
         setArrOfLikeIds(like.arrOfLikeIds);
     }, [like.arrOfLikeIds]);
 
+    useEffect(() => {
+        setArrOfCompareIds(like.arrOfCompareIds);
+    }, [like.arrOfCompareIds]);
+
     const addLike = () => {
-        // like.setArrOfLikeIds(flat.id)
         createLike(flat.id);
         like.setArrOfLikeIds(flat.id);
     }
 
     const addCompare = () => {
-        like.setArrOfCompareIds(flat.id)
+        createCompare(flat.id);
+        like.setArrOfCompareIds(flat.id);
     }
 
     const removeLike = () => {
         deleteLike(flat.id);
         like.setArrOfLikeIdsRemove(flat.id);
-        // alert('Квартира удалена из Избранного')
-        onHide();
     }
     
-    const removeCompare = () => {alert('Эта квартира уже в Сравнении')}
+    const removeCompare = () => {
+        deleteCompare(flat.id);
+        like.setArrOfCompareIdsRemove(flat.id);
+    }
 
     return (
         <Modal
@@ -98,17 +105,6 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                             </Tab>
                             <Tab eventKey="photos" title="Фотографии" >
                                 <Slider photos={arrOfImg} />
-                                {/* {flat.rooms === 1 ?
-                                    <img src={room_1_photo} alt="1-room" />
-                                    : flat.rooms === 2 ?
-                                    <img src={room_2_photo} alt="2-rooms" />
-                                    : flat.rooms === 3 ?
-                                        <img src={room_3_photo} alt="3-rooms" />
-                                    : flat.rooms === 4 ?
-                                        <img src={room_4_photo} alt="4-rooms" />
-                                    :
-                                    <img src={room_s_photo} alt="studio" />
-                                } */}
                             </Tab>
                         </Tabs>
                     </div>
@@ -126,7 +122,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                                 :
                                 <i className="bi bi-heart flat-detail__info_icons-item" onClick={addLike} data-tooltip="в Избранное"></i>
                             }
-                            {like.arrOfCompareIds.length && like.arrOfCompareIds.includes(flat.id) ?
+                            {arrOfCompareIds.length && arrOfCompareIds.includes(flat.id) ?
                                 <i className="bi bi-card-checklist flat-detail__info_icons-item" onClick={removeCompare} data-tooltip="Удалить из сравнения"></i>
                                 :
                                 <i className="bi bi-list-task flat-detail__info_icons-item" onClick={addCompare} data-tooltip="Сравнить"></i>
