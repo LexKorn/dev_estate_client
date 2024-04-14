@@ -46,7 +46,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
         deleteLike(flat.id);
         like.setArrOfLikeIdsRemove(flat.id);
         // alert('Квартира удалена из Избранного')
-        onHide();
+        // onHide();
     }
     
     const removeCompare = () => {alert('Эта квартира уже в Сравнении')}
