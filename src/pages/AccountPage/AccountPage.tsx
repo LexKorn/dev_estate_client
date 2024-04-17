@@ -42,8 +42,11 @@ const AccountPage: React.FC = observer(() => {
 
     useEffect(() => {
         fetchLikes().then(data => setArrOfLikeIds(data));
-        fetchCompares().then(data => setArrOfCompareIds(data));
     }, [visible]);
+
+    useEffect(() => {
+        fetchCompares().then(data => setArrOfCompareIds(data));
+    }, [like.visible]);
 
     useEffect(() => {
         setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));

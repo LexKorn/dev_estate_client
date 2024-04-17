@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {Table} from 'react-bootstrap'
+import { observer } from 'mobx-react-lite'
 
 import { IFlat } from '../../types/types'
 import { convertNumToStr, convertBuilding } from '../../utils/calc';
 import { convertRegion } from '../../utils/regions';
+import { Context } from '../..';
 import ModalFlatDetail from '../Modals/ModalFlatDetail';
 
 interface TableFlatsProps {
@@ -11,9 +13,14 @@ interface TableFlatsProps {
 };
 
 
-const TableFlats: React.FC<TableFlatsProps> = ({items}) => {
+const TableFlats: React.FC<TableFlatsProps> = observer(({items}) => {
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
     const [visible, setVisible] = useState<boolean>(false);
+    const {like} = useContext(Context);
+
+    useEffect(() => {
+        like.setVisible(visible);
+    }, [visible]);
 
     const selectFlat = (item: IFlat) => {
         setFlat(item);
@@ -61,6 +68,6 @@ const TableFlats: React.FC<TableFlatsProps> = ({items}) => {
             />
         </Table>
     );
-}
+});
 
 export default TableFlats
