@@ -44,7 +44,7 @@ const TableFlats: React.FC<TableFlatsProps> = ({items}) => {
                     >
                         <td>{++i}</td>
                         <td>{convertNumToStr(item.price)}</td>
-                        <td>{item.rooms}</td>
+                        <td>{item.rooms === -1 ? 'Студия' : item.rooms}</td>
                         <td>{item.area}</td>
                         <td>{item.kitchen_area}</td>
                         <td>{item.level} из {item.levels}</td>

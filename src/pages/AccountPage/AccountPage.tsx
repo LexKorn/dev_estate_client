@@ -16,6 +16,7 @@ import { IFlat, ILike } from '../../types/types'
 import { Context } from '../..'
 import {fetchLikes} from '../../http/likesAPI'
 import {fetchCompares} from '../../http/comparesAPI'
+import {fetchAllFlats} from '../../http/flatsAPI'
 
 import './accountPage.sass'
 
@@ -26,7 +27,7 @@ const AccountPage: React.FC = observer(() => {
     const [likedFlats, setLikedFlats] = useState<IFlat[]>([]);
     const [comparedFlats, setComparedFlats] = useState<IFlat[]>([]);
     const [visible, setVisible] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<ILike[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<ILike[]>([]);
     const {like, user} = useContext(Context);
