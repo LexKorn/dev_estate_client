@@ -102,9 +102,8 @@ const AccountPage: React.FC = observer(() => {
                 <Tab eventKey="compare" title="Сравнить" >
                     <TableFlats items={comparedFlats} />
                 </Tab>
-                <Tab eventKey="write" title="Написать" >
-                    
-                </Tab>
+                <Tab eventKey="reserved" title="Бронь" ></Tab>
+                <Tab eventKey="write" title="Написать" ></Tab>
             </Tabs>
 
             <Button 

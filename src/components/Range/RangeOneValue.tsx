@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {observer} from 'mobx-react-lite'
 
 import { Context } from '../..';
@@ -25,6 +25,7 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
     const [maxRange, setMaxRange] = useState(init);
     const [right, setRight] = useState(init);
     const {calc} = useContext(Context);
+    const inputRef = useRef(null);
     
     const handlerMaxPrice = () => {
         setMaxRange(value);
@@ -70,6 +71,11 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
         }
     };
     
+    const handleInputClick = () => {
+        //@ts-ignore
+        inputRef.current.select();
+    };
+
 
     return (
         <div className="range__wrapper">
@@ -78,6 +84,8 @@ const RangeOneValue: React.FC<RangeOneValueProps> = observer(({id, title, minVal
                 <input 
                     type="text" 
                     className="range__value_input range__value_input-max" 
+                    ref={inputRef}
+                    onClick={handleInputClick}
                     value={convertNumToStr(value)} 
                     onChange={e => {
                         (convertStrToNum(e.target.value) > minValue) ? 

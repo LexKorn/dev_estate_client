@@ -61,15 +61,25 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     function handleCheckboxClick(event) {
         const value = +event.target.value;
         if (event.target.checked) {
-            setCheckedValues([...checkedValues, value]);
+            if (value === 4) {
+                setCheckedValues([...checkedValues, value, 5, 6, 7]);
+            } else {
+                setCheckedValues([...checkedValues, value]);
+            }
         } else {
-            const newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value);
+            let newCheckedValues: number[] = [];
+            if (value === 4) {
+                newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value && currentValue !== 5 && currentValue !== 6 && currentValue !== 7);
+            } else {
+                newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value);
+            }
+
             setCheckedValues(newCheckedValues);
         }
     }
 
     function filterRooms(flats: IFlat[]) {
-        if (!checkedValues.length || checkedValues.length === 5) {
+        if (!checkedValues.length) {
             return flats;
         } else {
             return flats.filter(flat => checkedValues.includes(flat.rooms));
