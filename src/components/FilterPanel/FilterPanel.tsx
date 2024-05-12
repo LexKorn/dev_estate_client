@@ -23,6 +23,13 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     const [reset, setReset] = useState<boolean>(false);
     const [region, setRegion] = useState<number>(0);
     const [checkedValues, setCheckedValues] = useState<number[]>([]);
+    const [checkboxes, setCheckboxes] = useState({
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+    });
 
     useEffect(() => {
         // @ts-ignore
@@ -45,6 +52,14 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
         menuHandler();
         setReset(prev => !prev);
         setToggle(prev => !prev);
+        setCheckboxes({
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+        });
+        setCheckedValues([]);
     };
 
     function filterObjectType(flats: IFlat[]) {
@@ -60,7 +75,21 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     //@ts-ignore
     function handleCheckboxClick(event) {
         const value = +event.target.value;
-        if (event.target.checked) {
+        const checked = event.target.checked;
+
+        if (value > 0) {
+            setCheckboxes({
+                ...checkboxes,
+                [value + 1]: checked
+            });
+        } else {
+            setCheckboxes({
+                ...checkboxes,
+                [value + 2]: checked
+            });
+        }
+
+        if (checked) {
             if (value === 4) {
                 setCheckedValues([...checkedValues, value, 5, 6, 7]);
             } else {
@@ -130,15 +159,15 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         <label htmlFor="check-second">Вторичка</label>
                     </div>
                     <div className="filter-panel__checks_rooms">
-                        <input type="checkbox" id="check-studio" value="-1" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-studio" value="-1" onChange={handleCheckboxClick} checked={checkboxes[1]} />
                         <label htmlFor="check-studio">Студия</label>
-                        <input type="checkbox" id="check-one" value="1" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-one" value="1" onChange={handleCheckboxClick} checked={checkboxes[2]} />
                         <label htmlFor="check-one">1к</label>
-                        <input type="checkbox" id="check-two" value="2" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-two" value="2" onChange={handleCheckboxClick} checked={checkboxes[3]} />
                         <label htmlFor="check-two">2к</label>
-                        <input type="checkbox" id="check-three" value="3" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-three" value="3" onChange={handleCheckboxClick} checked={checkboxes[4]} />
                         <label htmlFor="check-three">3к</label>
-                        <input type="checkbox" id="check-four" value="4" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-four" value="4" onChange={handleCheckboxClick} checked={checkboxes[5]} />
                         <label htmlFor="check-four">4к+</label>
                     </div>
                     <Button variant='outline-warning' className="filter-panel__checks_btn" onClick={() => setToggle(prev => !prev)}>Показать</Button>
