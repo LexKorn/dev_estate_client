@@ -18,7 +18,7 @@ export default function List<T> (props: ListProps<T>) {
     return (
         <div 
             className="list"
-            style={{marginTop: isMain ? "180px" : "30px"}}
+            style={{marginTop: !isMain ? "30px" : document.offsetWidth > 600 ? "180px" : "30px"}}
             >
             {!props.items.length ? 
                 <div className="list__empty">Здесь пока ничего нет...</div>
