@@ -84,7 +84,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                                     <img src={room_2} alt="2-rooms" />
                                     : flat.rooms === 3 ?
                                         <img src={room_3} alt="3-rooms" />
-                                    : flat.rooms === 4 ?
+                                    : flat.rooms >= 4 ?
                                         <img src={room_4} alt="4-rooms" />
                                     :
                                     <img src={room_s} alt="studio" />
@@ -92,15 +92,15 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                             </Tab>
                             <Tab eventKey="plan" title="План этажа" >
                                 {flat.rooms === 1 ?
-                                    <img src={room_1_plan} alt="1-room" />
+                                    <img src={room_1_plan} alt="1-room-plan" />
                                     : flat.rooms === 2 ?
-                                    <img src={room_2_plan} alt="2-rooms" />
+                                    <img src={room_2_plan} alt="2-rooms-plan" />
                                     : flat.rooms === 3 ?
-                                        <img src={room_3_plan} alt="3-rooms" />
-                                    : flat.rooms === 4 ?
-                                        <img src={room_4_plan} alt="4-rooms" />
+                                        <img src={room_3_plan} alt="3-rooms-plan" />
+                                    : flat.rooms >= 4 ?
+                                        <img src={room_4_plan} alt="4-rooms-plan" />
                                     :
-                                    <img src={room_s_plan} alt="studio" />
+                                    <img src={room_s_plan} alt="studio-plan" />
                                 }
                             </Tab>
                             <Tab eventKey="photos" title="Фотографии" >

@@ -40,7 +40,7 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                             <img src={room_2} alt="2-rooms" />
                             : flat.rooms === 3 ?
                                 <img src={room_3} alt="3-rooms" />
-                            : flat.rooms === 4 ?
+                            : flat.rooms >= 4 ?
                                 <img src={room_4} alt="4-rooms" />
                             :
                             <img src={room_s} alt="studio" />
