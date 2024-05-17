@@ -14,7 +14,6 @@
         position: relative
         &_region
             position: absolute
-            // margin-right: 50px
             margin-top: 15px
         &_type
             margin: 25px 50px 0 200px
@@ -79,7 +78,7 @@
             &_btn
                 display: none
             &_region
-                margin-top: 70px
+                margin-top: 25px
                 position: static
         &__range
             flex-direction: column
@@ -99,11 +98,11 @@
                 left: -100%
                 background: none
         &__burger
-            display: block
+            display: flex
+            justify-content: space-between
             margin: 0
             position: fixed
             top: 60px
-            left: 180px
             z-index: 100
             cursor: pointer
             transition: all 0.6s ease
@@ -111,7 +110,12 @@
                 left: 5px
             &_btn
                 margin-top: 17px
-                border: none
+                margin-left: 13px
         &__btn
             display: block
+        &__btns
+            display: flex
+            justify-content: space-between
+            width: 200px
+            margin-left: 80px
     

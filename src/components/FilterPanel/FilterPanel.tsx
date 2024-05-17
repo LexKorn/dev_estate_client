@@ -23,6 +23,13 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     const [reset, setReset] = useState<boolean>(false);
     const [region, setRegion] = useState<number>(0);
     const [checkedValues, setCheckedValues] = useState<number[]>([]);
+    const [checkboxes, setCheckboxes] = useState({
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+    });
 
     useEffect(() => {
         // @ts-ignore
@@ -42,9 +49,17 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
         setCheckFirst(false);
         setCheckSecond(false);
         setRegion(0);
-        menuHandler();
+        // menuHandler();
         setReset(prev => !prev);
         setToggle(prev => !prev);
+        setCheckboxes({
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+        });
+        setCheckedValues([]);
     };
 
     function filterObjectType(flats: IFlat[]) {
@@ -60,16 +75,40 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     //@ts-ignore
     function handleCheckboxClick(event) {
         const value = +event.target.value;
-        if (event.target.checked) {
-            setCheckedValues([...checkedValues, value]);
+        const checked = event.target.checked;
+
+        if (value > 0) {
+            setCheckboxes({
+                ...checkboxes,
+                [value + 1]: checked
+            });
         } else {
-            const newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value);
+            setCheckboxes({
+                ...checkboxes,
+                [value + 2]: checked
+            });
+        }
+
+        if (checked) {
+            if (value === 4) {
+                setCheckedValues([...checkedValues, value, 5, 6, 7]);
+            } else {
+                setCheckedValues([...checkedValues, value]);
+            }
+        } else {
+            let newCheckedValues: number[] = [];
+            if (value === 4) {
+                newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value && currentValue !== 5 && currentValue !== 6 && currentValue !== 7);
+            } else {
+                newCheckedValues = [...checkedValues].filter((currentValue) => currentValue !== value);
+            }
+
             setCheckedValues(newCheckedValues);
         }
     }
 
     function filterRooms(flats: IFlat[]) {
-        if (!checkedValues.length || checkedValues.length === 5) {
+        if (!checkedValues.length) {
             return flats;
         } else {
             return flats.filter(flat => checkedValues.includes(flat.rooms));
@@ -95,10 +134,31 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
     return (
         <div className='filter-panel'>
             <div className={"filter-panel__burger" + ' ' + classMenu} onClick={() => menuHandler()}>
-                <Button variant='secondary' className="filter-panel__burger_btn">{classMenu === '' ? 'Скрыть' : 'Фильтр'}</Button>
+                <Button 
+                    variant='secondary' 
+                    className="filter-panel__burger_btn"
+                    >
+                        {classMenu === '' ? 'Скрыть' : 'Фильтр'}
+                </Button>
             </div>
 
             <div className={"filter-panel__wrapper"  + ' ' + classMenu}>
+                <div className="filter-panel__btns">
+                    <Button 
+                        variant='outline-warning'
+                        style={{'display': classMenu === '' ? 'block' : 'none'}}
+                        className="filter-panel__burger_btn" 
+                        onClick={filterHandler}>
+                            Показать
+                    </Button>
+                    <Button 
+                        variant='outline-danger' 
+                        style={{'display': classMenu === '' ? 'block' : 'none'}} 
+                        className="filter-panel__burger_btn" 
+                        onClick={resetFilter}>
+                            Сбросить
+                    </Button>
+                </div>
                 <div className="filter-panel__checks">
                     <Dropdown className="filter-panel__checks_region">
                         <Dropdown.Toggle variant={"outline-secondary"}>{Boolean(region) ? convertRegion(region) : 'Регион'}</Dropdown.Toggle>
@@ -120,19 +180,24 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         <label htmlFor="check-second">Вторичка</label>
                     </div>
                     <div className="filter-panel__checks_rooms">
-                        <input type="checkbox" id="check-studio" value="-1" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-studio" value="-1" onChange={handleCheckboxClick} checked={checkboxes[1]} />
                         <label htmlFor="check-studio">Студия</label>
-                        <input type="checkbox" id="check-one" value="1" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-one" value="1" onChange={handleCheckboxClick} checked={checkboxes[2]} />
                         <label htmlFor="check-one">1к</label>
-                        <input type="checkbox" id="check-two" value="2" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-two" value="2" onChange={handleCheckboxClick} checked={checkboxes[3]} />
                         <label htmlFor="check-two">2к</label>
-                        <input type="checkbox" id="check-three" value="3" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-three" value="3" onChange={handleCheckboxClick} checked={checkboxes[4]} />
                         <label htmlFor="check-three">3к</label>
-                        <input type="checkbox" id="check-four" value="4" onChange={handleCheckboxClick} />
+                        <input type="checkbox" id="check-four" value="4" onChange={handleCheckboxClick} checked={checkboxes[5]} />
                         <label htmlFor="check-four">4к+</label>
                     </div>
                     <Button variant='outline-warning' className="filter-panel__checks_btn" onClick={() => setToggle(prev => !prev)}>Показать</Button>
-                    <i className="bi bi-x-circle filter-panel__checks_reset" onClick={resetFilter} data-tooltip="Сбросить"></i>
+                    <i 
+                        className="bi bi-x-circle filter-panel__checks_reset"
+                        style={{'display': classMenu === '' ? 'none' : 'inline'}}
+                        onClick={resetFilter} 
+                        data-tooltip="Сбросить">
+                    </i>
                 </div>
                 <div className="filter-panel__range">
                     <RangeTwoValues
@@ -163,7 +228,7 @@ const FilterPanel: React.FC<FilterPanelProps> = observer(({flats}) => {
                         reset={reset}
                     />
                 </div>
-                <Button variant='outline-warning' className="filter-panel__btn" onClick={filterHandler}>Показать</Button>
+                {/* <Button variant='outline-warning' className="filter-panel__btn" onClick={filterHandler}>Показать</Button> */}
             </div>
         </div>
     )
