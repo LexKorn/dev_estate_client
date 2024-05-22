@@ -9,6 +9,7 @@ import FlatCard from '../../components/FlatCard/FlatCard'
 import Pageup from '../../components/Pageup/Pageup'
 import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import TableFlats from '../../components/TableFlats/TableFlats'
+import ChatBlock from '../../components/ChatBlock/ChatBlock'
 // import { flatsDB } from '../../utils/flatsDB'
 import {_transformObjToArr} from '../../utils/calc'
 import {MAIN_ROUTE} from '../../utils/consts';
@@ -103,7 +104,9 @@ const AccountPage: React.FC = observer(() => {
                     <TableFlats items={comparedFlats} />
                 </Tab>
                 <Tab eventKey="reserved" title="Бронь" ></Tab>
-                <Tab eventKey="write" title="Написать" ></Tab>
+                <Tab eventKey="write" title="Написать" >
+                    <ChatBlock />
+                </Tab>
             </Tabs>
 
             <Button 
