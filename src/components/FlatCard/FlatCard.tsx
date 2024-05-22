@@ -64,7 +64,7 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                                 ' другое'
                             }
                         </div>
-                        <div>Регион: {convertRegion(flat.region)}</div>
+                        <div className="flat-card__middle_region">Регион: {convertRegion(flat.region)}</div>
                         <div>{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
                     </div>
                     <div className="flat-card__right">

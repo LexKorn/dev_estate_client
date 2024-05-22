@@ -40,6 +40,8 @@
             font-weight: bold
             color: $black2-color
             display: inline
+        &_region
+            width: 100vw
     &__right
         text-align: right
         &_price
@@ -82,3 +84,12 @@
                 font-size: 16px
             &_subprice
                 font-size: 12px
+
+@media (max-width: 425px)
+    .flat-card
+        padding-left: 2px
+        padding-right: 4px
+        &__wrapper
+            grid-template-columns: 26% 42% 32%
+        &__middle
+            padding-left: 9px
