@@ -28,7 +28,7 @@ const TableFlats: React.FC<TableFlatsProps> = observer(({items}) => {
     };
 
     return (
-        <Table responsive striped bordered hover variant="dark" style={{textAlign: 'center'}}>
+        <Table responsive striped bordered hover variant="dark" style={{textAlign: 'center', whiteSpace: 'nowrap'}}>
             <thead>
                 <tr>
                     <th>#</th>
