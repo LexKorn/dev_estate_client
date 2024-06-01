@@ -20,3 +20,9 @@ export interface ILike {
     idOfFlat: number;
     userId: number;
 }
+
+export interface IMessage {
+    id: number;
+    userId: number;
+    text: string;
+};
