@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {Form, Button, ListGroup, Card} from 'react-bootstrap'
+import {Fade} from 'react-awesome-reveal'
 
 import { IMessage } from '../../types/types'
+import { LoaderT } from '../LoaderType/LoaderT'
 
 import './chatBlock.sass'
 
@@ -51,6 +53,7 @@ const ChatBlock: React.FC = () => {
                     <Button variant={"outline-warning"} className="chat__btn" onClick={createMessage}>Отправить</Button>              
                 </div>
             </Form>
+            <LoaderT />
 
             <ListGroup className="chat__list">
                 {/* <Fade cascade duration={300} triggerOnce={true} direction={'down'}> */}
