@@ -1,18 +1,27 @@
 import React, {useState, useEffect} from 'react'
 import {Form, Button, ListGroup, Card} from 'react-bootstrap'
-import {Fade} from 'react-awesome-reveal'
 
 import { IMessage } from '../../types/types'
 import { LoaderT } from '../LoaderType/LoaderT'
+import { index } from '../../utils/calc'
 
 import './chatBlock.sass'
 
+
+const answers: string[] = [
+    "Ваше обращение очень важно, мы скоро свяжемся с Вами.",
+    "Ваш запрос принят. Скоро вернёмся к Вам.",
+    "Наши менеджеры уже решают Вашу задачу",
+    "Мы свяжемся с Вами в ближайшее время.",
+    "Рады будем помочь со всеми вашими вопросами."
+];
 
 const ChatBlock: React.FC = () => {
     const [message, setMessage] = useState<IMessage>({} as IMessage);                    // created by user
     const [receivedMessage, setReceivedMessage] = useState<IMessage>({} as IMessage);    // created by system
     const [messages, setMessages] = useState<IMessage[]>([]);                            // array of all messeges
     const [text, setText] = useState<string>('');
+    const [typing, setTyping] = useState<boolean>(false);
 
     useEffect(() => {
         if (message.id) {
@@ -33,11 +42,13 @@ const ChatBlock: React.FC = () => {
         setMessage({id: Date.now(), userId: 1, text: text});
         setText('');
 
-        setTimeout(() => {createReceivedMessage()}, 2000);
+        setTimeout(() => {setTyping(true)}, 1200);
+        setTimeout(() => {setTyping(false)}, 4500);
+        setTimeout(() => {createReceivedMessage()}, 4700);
     };
 
     const createReceivedMessage = () => {
-        setReceivedMessage({id: Date.now(), userId: 2, text: "Ваше обращение очень важно, мы скоро свяжемся с Вами."});
+        setReceivedMessage({id: Date.now(), userId: 2, text: `${answers[index(answers)]}`});
     };
 
     return (
@@ -53,20 +64,18 @@ const ChatBlock: React.FC = () => {
                     <Button variant={"outline-warning"} className="chat__btn" onClick={createMessage}>Отправить</Button>              
                 </div>
             </Form>
-            <LoaderT />
 
             <ListGroup className="chat__list">
-                {/* <Fade cascade duration={300} triggerOnce={true} direction={'down'}> */}
-                    {Boolean(messages.length) && 
-                        messages.map(item =>
-                            <Card 
-                                key={item.id}
-                                className={item.userId === 1 ? "chat__list_item shadow receiver" : "chat__list_item shadow"}
-                                >
-                                {item.text}
-                            </Card>
-                    )}
-                {/* </Fade> */}
+                {Boolean(messages.length) && 
+                    messages.map(item =>
+                        <Card 
+                            key={item.id}
+                            className={item.userId === 1 ? "chat__list_item shadow receiver" : "chat__list_item shadow"}
+                            >
+                            {item.text}
+                        </Card>
+                )}
+                {typing && <LoaderT />}
             </ListGroup>
         </div>
     )

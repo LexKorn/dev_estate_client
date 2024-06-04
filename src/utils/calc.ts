@@ -61,3 +61,9 @@ export const _transformObjToArr = (arr: ILike[]) => {
     }
     return res;
 }
+
+const rundomNumberInRange = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+export const index = (arr: string[]) => rundomNumberInRange(0, arr.length - 1);
