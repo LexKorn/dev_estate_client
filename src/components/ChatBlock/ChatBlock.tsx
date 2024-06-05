@@ -51,6 +51,14 @@ const ChatBlock: React.FC = () => {
         setReceivedMessage({id: Date.now(), userId: 2, text: `${answers[index(answers)]}`});
     };
 
+    //@ts-ignore
+    const keyPress = (e: React.KeyboardEvent<FormControlElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            createMessage();
+        }
+    };
+
     return (
         <div className='chat'>
             <Form className="chat__form">
@@ -58,6 +66,7 @@ const ChatBlock: React.FC = () => {
                     className="chat__input"
                     value={text}
                     onChange={e => setText(e.target.value)}
+                    onKeyDown={e => keyPress(e)}
                     placeholder={"Набирите сообщение"}
                 />
                 <div className="chat__form_btn">
