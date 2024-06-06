@@ -23,6 +23,7 @@ export interface ILike {
 
 export interface IMessage {
     id: number;
-    userId: number;
     text: string;
+    sender: string;
+    userId: number;
 };
