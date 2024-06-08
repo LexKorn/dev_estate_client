@@ -16,17 +16,18 @@ const ChatBlock: React.FC = () => {
 
     useEffect(() => {
         fetchMessages().then(data => setMessages(data));
-    }, [typing, toggle]);
+    }, [toggle]);
 
     const onCreateMessage = () => {
         if (!text.trim()) {               
             return alert('Необходимо ввести текст');
         }
-        createMessage(text, 'user');
+        createMessage(text, 'user').then(() => setToggle(prev => !prev));
         setText('');
 
-        setTimeout(() => {setTyping(true)}, 1000);
-        setTimeout(() => {setTyping(false)}, 4500);
+        setTimeout(() => {setTyping(true)}, 500);
+        setTimeout(() => {setTyping(false)}, 4700);
+        setTimeout(() => {setToggle(prev => !prev)}, 4700);
     };
 
     const onDeleteMessages = () => {
@@ -71,7 +72,7 @@ const ChatBlock: React.FC = () => {
                 )}
                 {typing && <LoaderT />}
             </ListGroup>
-            <Button variant={"outline-danger"} className="chat__btn_rmv" onClick={onDeleteMessages}>Очистить переписку</Button>
+            <Button variant={"outline-secondary"} className="chat__btn_rmv" onClick={onDeleteMessages}>Очистить переписку</Button>
         </div>
     )
 }
