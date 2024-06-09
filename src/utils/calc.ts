@@ -67,3 +67,7 @@ const rundomNumberInRange = (min: number, max: number): number => {
 };
 
 export const index = (arr: string[]) => rundomNumberInRange(0, arr.length - 1);
+
+export const url = (lat: number, lon: number): string => {
+    return `https://geotree.ru/coordinates?lat=${lat}&lon=${lon}&z=10&mlat=${lat}&mlon=${lon}&c=`;
+}

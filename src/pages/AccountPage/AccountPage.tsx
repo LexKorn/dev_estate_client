@@ -10,6 +10,7 @@ import Pageup from '../../components/Pageup/Pageup'
 import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import TableFlats from '../../components/TableFlats/TableFlats'
 import ChatBlock from '../../components/ChatBlock/ChatBlock'
+import ReservBlock from '../../components/ReservBlock/ReservBlock'
 // import { flatsDB } from '../../utils/flatsDB'
 import {_transformObjToArr} from '../../utils/calc'
 import {MAIN_ROUTE} from '../../utils/consts';
@@ -103,7 +104,9 @@ const AccountPage: React.FC = observer(() => {
                 <Tab eventKey="compare" title="Сравнить" >
                     <TableFlats items={comparedFlats} />
                 </Tab>
-                <Tab eventKey="reserved" title="Бронь" ></Tab>
+                <Tab eventKey="reserved" title="Бронь" >
+                    <ReservBlock flat={flats[0]} />
+                </Tab>
                 <Tab eventKey="write" title="Написать" >
                     <ChatBlock />
                 </Tab>

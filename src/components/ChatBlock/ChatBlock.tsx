@@ -72,7 +72,9 @@ const ChatBlock: React.FC = () => {
                 )}
                 {typing && <LoaderT />}
             </ListGroup>
-            <Button variant={"outline-secondary"} className="chat__btn_rmv" onClick={onDeleteMessages}>Очистить переписку</Button>
+            {Boolean(messages.length) &&
+                <Button variant={"outline-secondary"} className="chat__btn_rmv" onClick={onDeleteMessages}>Очистить переписку</Button>
+            }
         </div>
     )
 }
