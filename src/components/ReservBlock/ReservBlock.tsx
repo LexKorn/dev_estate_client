@@ -11,14 +11,16 @@ interface ReservBlockProps {
     flat: IFlat
 }
 
+const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo_4];
+
 
 const ReservBlock: React.FC<ReservBlockProps> = ({flat}) => {
   return (
     <div className='reserv'>
         <div className="reserv__title">
-            <div className="flat-detail__info_flat">{flat.rooms === -1 ? 'Студия' : flat.rooms + '-комнатная'} {flat.area} м<sup>2</sup></div>
-            <div className="flat-detail__info_price">{convertNumToStr(flat.price)} руб.</div>
-            <div className="flat-detail__info_subprice">или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup></div>
+            <div className="reserv__title_flat">{flat.rooms === -1 ? 'Студия' : flat.rooms + '-комнатная'} {flat.area} м<sup>2</sup></div>
+            <div className="reserv__title_price">{convertNumToStr(flat.price)} руб.</div>
+            <div className="reserv__title_subprice">(или {convertNumToStr(Math.ceil(flat.price / flat.area))} за м<sup>2</sup>)</div>
         </div>
         <div className="reserv__plans">
             {flat.rooms === 1 ?
@@ -45,16 +47,17 @@ const ReservBlock: React.FC<ReservBlockProps> = ({flat}) => {
             }
         </div>
         <div className="reserv__info">
-            <div className="flat-detail__info_info">Этаж: {flat.level} из {flat.levels}</div>
-            <div className="flat-detail__info_info">Площадь кухни: {flat.kitchen_area} м<sup>2</sup></div>
-            <div className="flat-detail__info_info">Тип здания: {convertBuilding(flat.building_type)}</div>
-            <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
-            <div className="flat-detail__date">
+            <div className="reserv__info_item">Этаж: <span>{flat.level} из {flat.levels}</span></div>
+            <div className="reserv__info_item">Площадь кухни: <span>{flat.kitchen_area} м<sup>2</sup></span></div>
+            <div className="reserv__info_item">Тип здания: <span>{convertBuilding(flat.building_type)}</span></div>
+            <div className="reserv__info_item">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
+            <a className="reserv__info_link" href={url(flat.geo_lat, flat.geo_lon)} target="_blank" rel="noreferrer" >на карте &rarr;</a>
+            <div className="reserv__info_date">
                 Публикация: {textDate(flat.date)}
                 {flat.time?.substring(0, 5)}
             </div>
         </div>
-        <a className="flat-detail__link" href={url(flat.geo_lat, flat.geo_lon)} target="_blank" rel="noreferrer" >на карте</a>
+        <Slider photos={arrOfImg} />
     </div>
   )
 }
