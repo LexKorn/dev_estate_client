@@ -22,36 +22,36 @@ const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo
 
 
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide, flat}) => {
-    const {like} = useContext(Context);
+    const {account} = useContext(Context);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<number[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
 
     useEffect(() => {
-        setArrOfLikeIds(like.arrOfLikeIds);
-    }, [like.arrOfLikeIds]);
+        setArrOfLikeIds(account.arrOfLikeIds);
+    }, [account.arrOfLikeIds]);
 
     useEffect(() => {
-        setArrOfCompareIds(like.arrOfCompareIds);
-    }, [like.arrOfCompareIds]);
+        setArrOfCompareIds(account.arrOfCompareIds);
+    }, [account.arrOfCompareIds]);
 
     const addLike = () => {
         createLike(flat.id);
-        like.setArrOfLikeIds(flat.id);
+        account.setArrOfLikeIds(flat.id);
     }
 
     const addCompare = () => {
         createCompare(flat.id);
-        like.setArrOfCompareIds(flat.id);
+        account.setArrOfCompareIds(flat.id);
     }
 
     const removeLike = () => {
         deleteLike(flat.id);
-        like.setArrOfLikeIdsRemove(flat.id);
+        account.setArrOfLikeIdsRemove(flat.id);
     }
     
     const removeCompare = () => {
         deleteCompare(flat.id);
-        like.setArrOfCompareIdsRemove(flat.id);
+        account.setArrOfCompareIdsRemove(flat.id);
     }
 
     return (

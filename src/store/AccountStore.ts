@@ -1,14 +1,16 @@
 import { makeAutoObservable } from "mobx"
 
-export default class LikeStore {
+export default class AccountStore {
     _arrOfLikeIds: number[];
     _arrOfCompareIds: number[];
     _visibale: boolean;
+    _idOfReserv: number | null;
 
     constructor() {
         this._arrOfLikeIds = [];
         this._arrOfCompareIds = [];
         this._visibale = false;
+        this._idOfReserv = null;
 
         makeAutoObservable(this);
     }
@@ -28,6 +30,9 @@ export default class LikeStore {
     setVisible(bool: boolean) {
         this._visibale = bool;
     }
+    setIdOfReserv(num: number | null) {
+        this._idOfReserv = num;
+    }
 
     get arrOfLikeIds() {
         return this._arrOfLikeIds;
@@ -37,5 +42,8 @@ export default class LikeStore {
     }
     get visible() {
         return this._visibale;
+    }
+    get idOfReserv() {
+        return this._idOfReserv;
     }
 }

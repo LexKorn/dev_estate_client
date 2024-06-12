@@ -23,7 +23,7 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, ste
     const [right, setRight] = useState<number>(max);
     const [valueMin, setValueMin] = useState<number>(min);
     const [valueMax, setValueMax] = useState<number>(max);
-    const {base} = useContext(Context);
+    const {filter} = useContext(Context);
 
     const handlerMinPrice = () => {
         if ((valueMax - valueMin >= gap) && valueMax <= max) {
@@ -63,16 +63,16 @@ const RangeTwoValues: React.FC<RangeTwoValuesProps> = ({id, title, min, max, ste
 
         switch (id) {
             case "price-main":
-                base.setPriceMin(valueMin);
-                base.setPriceMax(valueMax);
+                filter.setPriceMin(valueMin);
+                filter.setPriceMax(valueMax);
                 break;
             case "area":
-                base.setAreaMin(valueMin);
-                base.setAreaMax(valueMax);
+                filter.setAreaMin(valueMin);
+                filter.setAreaMax(valueMax);
                 break;
             case "level":
-                base.setLevelMin(valueMin);
-                base.setLevelMax(valueMax);
+                filter.setLevelMin(valueMin);
+                filter.setLevelMax(valueMax);
                 break;
         }
     }, [valueMin, valueMax]);

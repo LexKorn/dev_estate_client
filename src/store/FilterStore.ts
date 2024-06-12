@@ -3,7 +3,7 @@ import {makeAutoObservable} from 'mobx'
 import { IFlat } from '../types/types';
 
 
-export default class BaseStore {
+export default class FilterStore {
     _visibleFlats: IFlat[];
     _priceMin: number;
     _priceMax: number;

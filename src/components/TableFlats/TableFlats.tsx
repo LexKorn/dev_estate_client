@@ -16,10 +16,10 @@ interface TableFlatsProps {
 const TableFlats: React.FC<TableFlatsProps> = observer(({items}) => {
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
     const [visible, setVisible] = useState<boolean>(false);
-    const {like} = useContext(Context);
+    const {account} = useContext(Context);
 
     useEffect(() => {
-        like.setVisible(visible);
+        account.setVisible(visible);
     }, [visible]);
 
     const selectFlat = (item: IFlat) => {

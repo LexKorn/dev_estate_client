@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom/client';
 
 import App from './App';
 import CalcStore from './store/CalcStore';
-import BaseStore from './store/BaseStore';
-import LikeStore from './store/LikeStore';
+import FilterStore from './store/FilterStore';
+import AccountStore from './store/AccountStore';
 import UserStore from './store/UserStore';
 
 import './styles/style.sass';
 
 type RootStateContextValue = {
   calc: CalcStore;
-  base: BaseStore;
-  like: LikeStore;
+  filter: FilterStore;
+  account: AccountStore;
   user: UserStore;
 }
 
@@ -25,8 +25,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <Context.Provider value={{
     calc: new CalcStore(),
-    base: new BaseStore(),
-    like: new LikeStore(),
+    filter: new FilterStore(),
+    account: new AccountStore(),
     user: new UserStore()
   }}>
     <App />

@@ -13,6 +13,7 @@ interface FlatCardProps {
     onClick: (flat: IFlat) => void;
 };
 
+function noop() {}
 
 const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
     const [classHover, setClassHover] = useState<string>('');
@@ -24,8 +25,12 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
     return (
         <Card 
                 className={"flat-card" + ' ' + classHover}
-                onClick={() => onClick(flat)}
-                style={{border: flat.object_type === 1 ? '2px solid #ffdd2d' : '4px solid #D0F4F2'}}
+                onClick={() => flat.id === 0 ? noop() : onClick(flat)}
+                style={{
+                    border: flat.object_type === 1 ? '2px solid #ffdd2d' : '4px solid #D0F4F2', 
+                    opacity: flat.id === 0 ? 0.5 : 1, 
+                    cursor: flat.id === 0 ? 'default' : 'pointer'
+                }}
                 onMouseOver={() => hoverHandler()}
                 onMouseLeave={() => setClassHover('')}
             >

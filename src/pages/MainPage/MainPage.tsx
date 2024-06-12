@@ -16,7 +16,7 @@ import './mainPage.sass'
 
 
 const MainPage: React.FC = observer(() => {
-    const {base} = useContext(Context);
+    const {filter} = useContext(Context);
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
     const [flats, setFlats] = useState<IFlat[]>([]);
     const [flatsVisible, setFlatsVisible] = useState<IFlat[]>([]);
@@ -48,8 +48,8 @@ const MainPage: React.FC = observer(() => {
     }, []);
 
     useEffect(() => {
-        setFlatsVisible(base.visibleFlats);
-    }, [base.visibleFlats]);
+        setFlatsVisible(filter.visibleFlats);
+    }, [filter.visibleFlats]);
 
     // useEffect(() => {
     //     console.log(flats);

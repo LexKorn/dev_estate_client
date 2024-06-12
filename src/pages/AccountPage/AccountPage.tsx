@@ -32,7 +32,7 @@ const AccountPage: React.FC = observer(() => {
     const [loading, setLoading] = useState<boolean>(true);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<ILike[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<ILike[]>([]);
-    const {like, user} = useContext(Context);
+    const {account, user} = useContext(Context);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,16 +48,16 @@ const AccountPage: React.FC = observer(() => {
 
     useEffect(() => {
         fetchCompares().then(data => setArrOfCompareIds(data));
-    }, [like.visible]);
+    }, [account.visible]);
 
     useEffect(() => {
         setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));
-        _transformObjToArr(arrOfLikeIds).forEach(item => like.setArrOfLikeIds(item));
+        _transformObjToArr(arrOfLikeIds).forEach(item => account.setArrOfLikeIds(item));
     }, [arrOfLikeIds]);
 
     useEffect(() => {
         setComparedFlats(flats.filter(flat => _transformObjToArr(arrOfCompareIds).includes(flat.id)));
-        _transformObjToArr(arrOfCompareIds).forEach(item => like.setArrOfCompareIds(item));
+        _transformObjToArr(arrOfCompareIds).forEach(item => account.setArrOfCompareIds(item));
     }, [arrOfCompareIds]);
 
     const selectFlat = (item: IFlat) => {
