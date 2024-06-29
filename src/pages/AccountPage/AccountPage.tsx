@@ -47,15 +47,15 @@ const AccountPage: React.FC = observer(() => {
 
     useEffect(() => {
         fetchLikes().then(data => setArrOfLikeIds(data));
-    }, [visible]);
+    }, [visible, flats]);
 
     useEffect(() => {
         fetchCompares().then(data => setArrOfCompareIds(data));
-    }, [account.visible]);
+    }, [account.visible, flats]);
 
     useEffect(() => {
         fetchReserve().then(data => setIdOfReserv(data));
-    }, [account.idOfReserv]);
+    }, [account.idOfReserv, flats]);
 
     useEffect(() => {
         setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));
@@ -82,6 +82,7 @@ const AccountPage: React.FC = observer(() => {
 
     const logOut = () => {
         user.setIsAuth(false);
+        account.setIdOfReservRemove();
         localStorage.clear();
         navigate(MAIN_ROUTE);
     };

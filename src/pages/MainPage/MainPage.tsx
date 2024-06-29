@@ -23,8 +23,8 @@ const MainPage: React.FC = observer(() => {
     const [flatsVisible, setFlatsVisible] = useState<IFlat[]>([]);
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [totalCount, setTotalCount] = useState<number>(11);
+    // const [currentPage, setCurrentPage] = useState<number>(1);
+    // const [totalCount, setTotalCount] = useState<number>(11);
 
     // useEffect(() => {
     //     if (loading) {
@@ -55,8 +55,8 @@ const MainPage: React.FC = observer(() => {
     useEffect(() => {
         if (user.isAuth) {
             fetchReserve().then(data => {
-                account.setIdOfReserv(data.idOfFlat)
-                console.log(data)
+                account.setIdOfReserv(data.idOfFlat);
+                // console.log(data);
             });
         }
     }, []);
@@ -80,14 +80,14 @@ const MainPage: React.FC = observer(() => {
     };
 
     // @ts-ignore
-    const scrollHandler = (e) => {
-        if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100 && flats.length < totalCount) {
-            setLoading(true);
-        }
+    // const scrollHandler = (e) => {
+    //     if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100 && flats.length < totalCount) {
+    //         setLoading(true);
+    //     }
         // console.log('scrollHeight', e.target.documentElement.scrollHeight);  // Общая высота страницы с учётом скрола
         // console.log('scrollTop', e.target.documentElement.scrollTop);        // Текущее положение скрола от верха страницы
         // console.log('innerHeight', window.innerHeight);                      // Высота видимой области страницы (высота браузера)
-    }
+    // }
 
     if (loading) {
         return (
