@@ -11,12 +11,13 @@ import ModalFlatDetail from '../../components/Modals/ModalFlatDetail'
 import { IFlat } from '../../types/types'
 import { Context } from '../..'
 import { fetchPageFlats, fetchAllFlats } from '../../http/flatsAPI'
+import { fetchReserve } from '../../http/reservesAPI'
 
 import './mainPage.sass'
 
 
 const MainPage: React.FC = observer(() => {
-    const {filter} = useContext(Context);
+    const {filter, account, user} = useContext(Context);
     const [flat, setFlat] = useState<IFlat>({} as IFlat);
     const [flats, setFlats] = useState<IFlat[]>([]);
     const [flatsVisible, setFlatsVisible] = useState<IFlat[]>([]);
@@ -50,6 +51,15 @@ const MainPage: React.FC = observer(() => {
     useEffect(() => {
         setFlatsVisible(filter.visibleFlats);
     }, [filter.visibleFlats]);
+
+    useEffect(() => {
+        if (user.isAuth) {
+            fetchReserve().then(data => {
+                account.setIdOfReserv(data.idOfFlat)
+                console.log(data)
+            });
+        }
+    }, []);
 
     // useEffect(() => {
     //     console.log(flats);

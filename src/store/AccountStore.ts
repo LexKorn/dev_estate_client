@@ -27,12 +27,16 @@ export default class AccountStore {
     setArrOfCompareIdsRemove(id: number) {
         this._arrOfCompareIds = this._arrOfCompareIds.filter(item => item !== id);
     }
+    setIdOfReserv(num: number) {
+        this._idOfReserv = num;
+    }
+    setIdOfReservRemove() {
+        this._idOfReserv = null;
+    }
     setVisible(bool: boolean) {
         this._visibale = bool;
     }
-    setIdOfReserv(num: number | null) {
-        this._idOfReserv = num;
-    }
+    
 
     get arrOfLikeIds() {
         return this._arrOfLikeIds;
@@ -40,10 +44,10 @@ export default class AccountStore {
     get arrOfCompareIds() {
         return this._arrOfCompareIds;
     }
-    get visible() {
-        return this._visibale;
-    }
     get idOfReserv() {
         return this._idOfReserv;
+    }
+    get visible() {
+        return this._visibale;
     }
 }

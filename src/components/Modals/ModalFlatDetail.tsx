@@ -7,6 +7,7 @@ import { Context } from '../..'
 import { textDate, convertNumToStr, convertBuilding, url } from '../../utils/calc'
 import {createLike, deleteLike} from '../../http/likesAPI'
 import {createCompare, deleteCompare} from '../../http/comparesAPI'
+import { createReserve, updateReserve } from '../../http/reservesAPI'
 import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import Slider from '../Slider/Slider';
 
@@ -42,6 +43,12 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
     const addCompare = () => {
         createCompare(flat.id);
         account.setArrOfCompareIds(flat.id);
+    }
+
+    const addReserve = () => {
+        // createReserve(flat.id);
+        updateReserve(flat.id);
+        account.setIdOfReserv(flat.id);
     }
 
     const removeLike = () => {
@@ -123,7 +130,12 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                                 :
                                 <i className="bi bi-list-task flat-detail__info_icons-item" onClick={addCompare} data-tooltip="Сравнить"></i>
                             }
-                            <i className="bi bi-basket2 flat-detail__info_icons-item" onClick={() => {alert('Данная функция пока в разработке...')}} data-tooltip="Забронировать"></i>
+                            <i 
+                                className="bi bi-basket2 flat-detail__info_icons-item" 
+                                onClick={addReserve} 
+                                data-tooltip="Забронировать"
+                                style={{visibility: account.idOfReserv ? 'hidden' : 'visible'}}>
+                            </i>
                         </div>
                     </div>
                 </div>

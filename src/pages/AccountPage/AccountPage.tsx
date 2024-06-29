@@ -19,6 +19,7 @@ import { Context } from '../..'
 import {fetchLikes} from '../../http/likesAPI'
 import {fetchCompares} from '../../http/comparesAPI'
 import {fetchAllFlats} from '../../http/flatsAPI'
+import {fetchReserve} from '../../http/reservesAPI'
 
 import './accountPage.sass'
 
@@ -28,10 +29,12 @@ const AccountPage: React.FC = observer(() => {
     const [flats, setFlats] = useState<IFlat[]>([]);
     const [likedFlats, setLikedFlats] = useState<IFlat[]>([]);
     const [comparedFlats, setComparedFlats] = useState<IFlat[]>([]);
+    const [reservedFlat, setReservedFlat] = useState<IFlat>({} as IFlat);
     const [visible, setVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<ILike[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<ILike[]>([]);
+    const [idOfReserv, setIdOfReserv] = useState<ILike | null>(null);
     const {account, user} = useContext(Context);
     const navigate = useNavigate();
 
@@ -51,6 +54,10 @@ const AccountPage: React.FC = observer(() => {
     }, [account.visible]);
 
     useEffect(() => {
+        fetchReserve().then(data => setIdOfReserv(data));
+    }, [account.idOfReserv]);
+
+    useEffect(() => {
         setLikedFlats(flats.filter(flat => _transformObjToArr(arrOfLikeIds).includes(flat.id)));
         _transformObjToArr(arrOfLikeIds).forEach(item => account.setArrOfLikeIds(item));
     }, [arrOfLikeIds]);
@@ -59,6 +66,14 @@ const AccountPage: React.FC = observer(() => {
         setComparedFlats(flats.filter(flat => _transformObjToArr(arrOfCompareIds).includes(flat.id)));
         _transformObjToArr(arrOfCompareIds).forEach(item => account.setArrOfCompareIds(item));
     }, [arrOfCompareIds]);
+
+    useEffect(() => {
+        if (idOfReserv?.idOfFlat) {
+            setReservedFlat(flats.filter(flat => flat.id === idOfReserv.idOfFlat)[0]);
+            account.setIdOfReserv(idOfReserv.idOfFlat);
+        }
+    }, [idOfReserv]);
+
 
     const selectFlat = (item: IFlat) => {
         setFlat(item);
@@ -105,7 +120,7 @@ const AccountPage: React.FC = observer(() => {
                     <TableFlats items={comparedFlats} />
                 </Tab>
                 <Tab eventKey="reserved" title="Бронь" >
-                    <ReservBlock flat={flats[0]} />
+                    <ReservBlock flat={reservedFlat} />
                 </Tab>
                 <Tab eventKey="write" title="Написать" >
                     <ChatBlock />

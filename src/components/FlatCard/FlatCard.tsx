@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {Card} from 'react-bootstrap'
+import {observer} from 'mobx-react-lite'
 
 import { IFlat } from '../../types/types';
 import { convertNumToStr, textDate } from '../../utils/calc';
 import { convertRegion } from '../../utils/regions';
 import { room_1, room_2, room_3, room_4, room_s } from '../../assets/img';
+import { Context } from '../..';
 
 import './flatCard.sass';
 
@@ -15,8 +17,9 @@ interface FlatCardProps {
 
 function noop() {}
 
-const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
+const FlatCard: React.FC<FlatCardProps> = observer(({flat, onClick}) => {
     const [classHover, setClassHover] = useState<string>('');
+    const {account} = useContext(Context);
 
     const hoverHandler = () => {
         flat.object_type === 1 ? setClassHover('hover-second') : setClassHover('hover-first');
@@ -25,13 +28,13 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
     return (
         <Card 
                 className={"flat-card" + ' ' + classHover}
-                onClick={() => flat.id === 0 ? noop() : onClick(flat)}
+                onClick={() => flat.id === account.idOfReserv ? noop() : onClick(flat)}
                 style={{
                     border: flat.object_type === 1 ? '2px solid #ffdd2d' : '4px solid #D0F4F2', 
-                    opacity: flat.id === 0 ? 0.5 : 1, 
-                    cursor: flat.id === 0 ? 'default' : 'pointer'
+                    opacity: flat.id === account.idOfReserv ? 0.5 : 1, 
+                    cursor: flat.id === account.idOfReserv ? 'default' : 'pointer'
                 }}
-                onMouseOver={() => hoverHandler()}
+                onMouseOver={() => flat.id === account.idOfReserv ? noop() : hoverHandler()}
                 onMouseLeave={() => setClassHover('')}
             >
                 <div className="flat-card__date">
@@ -79,6 +82,6 @@ const FlatCard: React.FC<FlatCardProps> = ({flat, onClick}) => {
                 </div>
             </Card>  
     )
-}
+});
 
 export default FlatCard
