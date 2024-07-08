@@ -1,4 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import {Modal, Tab, Tabs} from 'react-bootstrap'
 import {observer} from 'mobx-react-lite'
 
@@ -8,6 +9,8 @@ import { textDate, convertNumToStr, convertBuilding, url } from '../../utils/cal
 import {createLike, deleteLike} from '../../http/likesAPI'
 import {createCompare, deleteCompare} from '../../http/comparesAPI'
 import { createReserve, updateReserve } from '../../http/reservesAPI'
+import { convertRegion } from '../../utils/regions'
+import { LOGIN_ROUTE } from '../../utils/consts'
 import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import Slider from '../Slider/Slider';
 
@@ -23,9 +26,10 @@ const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo
 
 
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide, flat}) => {
-    const {account} = useContext(Context);
+    const {account, user} = useContext(Context);
     const [arrOfLikeIds, setArrOfLikeIds] = useState<number[]>([]);
     const [arrOfCompareIds, setArrOfCompareIds] = useState<number[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setArrOfLikeIds(account.arrOfLikeIds);
@@ -35,20 +39,38 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
         setArrOfCompareIds(account.arrOfCompareIds);
     }, [account.arrOfCompareIds]);
 
+    function loginFunc () {
+        if (window.confirm('Необходима авторизация! \nПерейти на страницу авторизации?')) {
+            navigate(LOGIN_ROUTE);
+        }
+    }
+
     const addLike = () => {
-        createLike(flat.id);
-        account.setArrOfLikeIds(flat.id);
+        if (user.isAuth) {
+            createLike(flat.id);
+            account.setArrOfLikeIds(flat.id);
+        } else {
+            loginFunc();
+        }
     }
 
     const addCompare = () => {
-        createCompare(flat.id);
-        account.setArrOfCompareIds(flat.id);
+        if (user.isAuth) {
+            createCompare(flat.id);
+            account.setArrOfCompareIds(flat.id);
+        } else {
+            loginFunc();
+        }
     }
 
     const addReserve = () => {
-        // createReserve(flat.id);
-        updateReserve(flat.id);
-        account.setIdOfReserv(flat.id);
+        if (user.isAuth) {
+            // createReserve(flat.id);
+            updateReserve(flat.id);
+            account.setIdOfReserv(flat.id);
+        } else {
+            loginFunc();
+        }
     }
 
     const removeLike = () => {
@@ -119,6 +141,7 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                         <div className="flat-detail__info_info">Площадь кухни: {flat.kitchen_area} м<sup>2</sup></div>
                         <div className="flat-detail__info_info">Тип здания: {convertBuilding(flat.building_type)}</div>
                         <div className="flat-detail__info_info">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
+                        <div className="flat-detail__info_info">{convertRegion(flat.region)}</div>
                         <div className="flat-detail__info_icons">
                             {arrOfLikeIds.length && arrOfLikeIds.includes(flat.id) ?
                                 <i className="bi bi-heart-fill flat-detail__info_icons-item" onClick={removeLike} data-tooltip="удалить из Избранного"></i>

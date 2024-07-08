@@ -9,6 +9,7 @@ import { deleteReserve, updateReserve } from '../../http/reservesAPI'
 import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import { MAIN_ROUTE } from '../../utils/consts'
 import { Context } from '../..'
+import { convertRegion } from '../../utils/regions'
 import Slider from '../Slider/Slider';
 
 import './reservBlock.sass'
@@ -69,6 +70,7 @@ const ReservBlock: React.FC<ReservBlockProps> = observer(({flat}) => {
                         <div className="reserve__info_item">Площадь кухни: <span>{flat.kitchen_area} м<sup>2</sup></span></div>
                         <div className="reserve__info_item">Тип здания: <span>{convertBuilding(flat.building_type)}</span></div>
                         <div className="reserve__info_item">{flat.object_type === 1 ? 'Вторичка' : 'Новостройка'}</div>
+                        <div className="reserve__info_item">{convertRegion(flat.region)}</div>
                         <a className="reserve__info_link" href={url(flat.geo_lat, flat.geo_lon)} target="_blank" rel="noreferrer" >на карте &rarr;</a>
                         <div className="reserve__info_date">
                             Публикация: {textDate(flat.date)}
