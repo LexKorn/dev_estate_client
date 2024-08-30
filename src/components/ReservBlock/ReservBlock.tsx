@@ -6,19 +6,18 @@ import {useNavigate} from 'react-router-dom'
 import { IFlat } from '../../types/types'
 import { textDate, convertNumToStr, convertBuilding, url } from '../../utils/calc'
 import { deleteReserve, updateReserve } from '../../http/reservesAPI'
-import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import { MAIN_ROUTE } from '../../utils/consts'
 import { Context } from '../..'
 import { convertRegion } from '../../utils/regions'
 import Slider from '../Slider/Slider';
-
+import { room_1, room_2, room_3, room_4, room_s, 
+    room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, 
+    arrOfImg1, arrOfImg2, arrOfImg3, arrOfImg4, arrOfImgS } from '../../assets/img';
 import './reservBlock.sass'
 
 interface ReservBlockProps {
     flat: IFlat
 }
-
-const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo_4];
 
 
 const ReservBlock: React.FC<ReservBlockProps> = observer(({flat}) => {
@@ -78,7 +77,17 @@ const ReservBlock: React.FC<ReservBlockProps> = observer(({flat}) => {
                         </div>
                     </div>
                     <div className="reserve__slider">
-                        <Slider photos={arrOfImg} />
+                        {flat.rooms === 1 ?
+                            <Slider photos={arrOfImg1} />
+                            : flat.rooms === 2 ?
+                                <Slider photos={arrOfImg2} />
+                            : flat.rooms === 3 ?
+                                <Slider photos={arrOfImg3} />
+                            : flat.rooms >= 4 ?
+                                <Slider photos={arrOfImg4} />
+                            :
+                            <Slider photos={arrOfImgS} />
+                        }
                     </div>
                     <Button variant={"outline-secondary"} className="reserve__btn" onClick={onCancel}>Отменить бронирование</Button>
                 </div>

@@ -11,8 +11,10 @@ import {createCompare, deleteCompare} from '../../http/comparesAPI'
 import { createReserve, updateReserve } from '../../http/reservesAPI'
 import { convertRegion } from '../../utils/regions'
 import { LOGIN_ROUTE } from '../../utils/consts'
-import { room_1, room_2, room_3, room_4, room_s, room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, room_1_photo, room_2_photo, room_3_photo, room_4_photo, room_s_photo, room_photo_1, room_photo_2, room_photo_3, room_photo_4 } from '../../assets/img';
 import Slider from '../Slider/Slider';
+import { room_1, room_2, room_3, room_4, room_s, 
+    room_1_plan, room_2_plan, room_3_plan, room_4_plan, room_s_plan, 
+    arrOfImg1, arrOfImg2, arrOfImg3, arrOfImg4, arrOfImgS } from '../../assets/img';
 
 import './modalFlatDetail.sass'
 
@@ -21,8 +23,6 @@ interface ModalFlatDetailProps {
     onHide: () => void;
     flat: IFlat;
 };
-
-const arrOfImg: string[] = [room_photo_1, room_photo_2, room_photo_3, room_photo_4];
 
 
 const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide, flat}) => {
@@ -129,7 +129,17 @@ const ModalFlatDetail: React.FC<ModalFlatDetailProps> = observer(({show, onHide,
                                 }
                             </Tab>
                             <Tab eventKey="photos" title="Фотографии" >
-                                <Slider photos={arrOfImg} />
+                                {flat.rooms === 1 ?
+                                    <Slider photos={arrOfImg1} />
+                                    : flat.rooms === 2 ?
+                                        <Slider photos={arrOfImg2} />
+                                    : flat.rooms === 3 ?
+                                        <Slider photos={arrOfImg3} />
+                                    : flat.rooms >= 4 ?
+                                        <Slider photos={arrOfImg4} />
+                                    :
+                                    <Slider photos={arrOfImgS} />
+                                }
                             </Tab>
                         </Tabs>
                     </div>

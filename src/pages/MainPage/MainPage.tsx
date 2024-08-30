@@ -12,6 +12,7 @@ import { IFlat } from '../../types/types'
 import { Context } from '../..'
 import { fetchPageFlats, fetchAllFlats } from '../../http/flatsAPI'
 import { fetchReserve } from '../../http/reservesAPI'
+// import { flatsDB } from '../../utils/flatsDB'
 
 import './mainPage.sass'
 
@@ -72,6 +73,9 @@ const MainPage: React.FC = observer(() => {
     //         document.removeEventListener('scroll', scrollHandler);
     //     }
     // }, []);
+
+    // console.log('БАЗА ДАННЫХ:', flatsDB);
+    
     
 
     const selectFlat = (item: IFlat) => {
