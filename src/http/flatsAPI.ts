@@ -1,7 +1,7 @@
 import { $host } from "./index";
 
 export const fetchAllFlats = async () => {
-    const {data} = await $host.get('api/flats?limit=20');
+    const {data} = await $host.get('api/flats?limit=2000');
     return data;
 };
 
